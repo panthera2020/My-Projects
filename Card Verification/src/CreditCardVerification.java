@@ -35,9 +35,17 @@ public class CreditCardVerification {
     public String cardType(long cardNumber) {
         String cardNumberString = cardNumber + "";
         char firstDigit = cardNumberString.charAt(0);
+        char secondDigit = cardNumberString.charAt(1);
+
         String cardType = "";
         if(firstDigit == '4'){
             cardType = "Visa";
+        }if(firstDigit == '5'){
+            cardType = "MasterCard";
+        }if(firstDigit == '6'){
+            cardType = "Discover Card";
+        }if(firstDigit == '3' && secondDigit == '7'){
+            cardType = "American Express Card";
         }
         return cardType;
     }
