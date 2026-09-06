@@ -25,6 +25,7 @@ public class Main {
             ===============================================
             TO ENTER NUMBER OF STUDENTS -> PRESS 1
             TO ENTER GRADES             -> PRESS 2
+            TO DISPLAY ALL GRADES       -> PRESS 3
             ===============================================
             TO EXIT                     -> PRESS 0
             ===============================================
@@ -73,7 +74,14 @@ public class Main {
                         }
                     }else if(function.isInputValid(studentMenu) && studentMenu.equals("0")){
                         studentMenuChoice = 0;
-                    }else{
+                    }else if(function.isInputValid(studentMenu) && studentMenu.equals("3")){
+                        if(eachStudent.isEmpty()){
+                            IO.println("No students registered");
+                        }else{
+
+                        }
+                    }
+                    else{
                         IO.println("Invalid input!");
                     }
                 }
