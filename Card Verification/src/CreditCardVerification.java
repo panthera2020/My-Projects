@@ -23,9 +23,7 @@ public class CreditCardVerification {
         char firstDigit = cardNumberString.charAt(0);
         char secondDigit = cardNumberString.charAt(1);
 
-        boolean isFirstDigit = firstDigit == '4' || firstDigit == '5' || firstDigit == '6' || (firstDigit == '3' && secondDigit == '7');
-
-        return isFirstDigit;
+        return firstDigit == '4' || firstDigit == '5' || firstDigit == '6' || (firstDigit == '3' && secondDigit == '7');
     }
 
     public String cardType(long cardNumber) {
