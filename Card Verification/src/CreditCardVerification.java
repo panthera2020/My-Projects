@@ -49,4 +49,66 @@ public class CreditCardVerification {
         }
         return cardType;
     }
+
+    public int [] getArrayOf(long numbers) {
+        String numberToString = numbers + "";
+        String [] stringNumbersToArray = numberToString.split("");
+        int [] arrayOfNumbers = new int[stringNumbersToArray.length];
+        for(int index = 0; index < stringNumbersToArray.length; index++){
+            arrayOfNumbers[index] = Integer.parseInt(stringNumbersToArray[index]);
+        }
+        return arrayOfNumbers;
+    }
+
+    public int [] doubleSecondElementsRightToLeft(long numbers) {
+        int [] arrayOfNumbers = getArrayOf(numbers);
+        for(int index = arrayOfNumbers.length - 2; index >= 0; index-=2){
+            arrayOfNumbers[index] = arrayOfNumbers[index] * 2;
+        }
+        return arrayOfNumbers;
+    }
+
+    public int[] doubleSecondElementsRightToLeftNoDoubleDigitElement(long numbers) {
+        int [] arrayOfNumbers = doubleSecondElementsRightToLeft(numbers);
+        int sum = 0;
+        for(int index = arrayOfNumbers.length - 2; index >= 0; index-=2){
+            if(arrayOfNumbers[index] > 9){
+                int doubleDigitIndex = arrayOfNumbers[index];
+                while(doubleDigitIndex != 0){
+                    int digit =  doubleDigitIndex % 10;
+                    sum  += digit;
+                    doubleDigitIndex = doubleDigitIndex / 10;
+                }
+                arrayOfNumbers[index] = sum;
+            }
+        }
+        return arrayOfNumbers;
+    }
+
+    public int sumOfSecondDigitsRightToLeft(long numbers) {
+        int []  arrayOfNumbers = doubleSecondElementsRightToLeftNoDoubleDigitElement(numbers);
+        int sum = 0;
+        for(int index = arrayOfNumbers.length - 2; index >= 0; index-=2){
+            sum += arrayOfNumbers[index];
+        }
+        return sum;
+    }
+
+    public int sumOfOddPlacedDigitsRightToLeft(long numbers) {
+        int []  arrayOfNumbers = doubleSecondElementsRightToLeftNoDoubleDigitElement(numbers);
+        int sum = 0;
+        for(int index = arrayOfNumbers.length - 1; index >= 0; index-=2){
+            sum += arrayOfNumbers[index];
+        }
+        return sum;
+    }
+
+
+    public int sumOfOddPlacedSecondDigitsRightToLeft(long numbers) {
+        return sumOfOddPlacedDigitsRightToLeft(numbers) + sumOfSecondDigitsRightToLeft(numbers);
+    }
+
+    public boolean isCardValid(long number) {
+        return sumOfOddPlacedSecondDigitsRightToLeft(number) % 2 == 0;
+    }
 }

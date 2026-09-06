@@ -68,4 +68,42 @@ public class CreditCardVerificationTest {
         assertTrue(creditCard.isLenghtValid(379987465855678L));
         assertEquals("American Express Card", creditCard.cardType(379987465855678L));
     }
+
+    @Test
+    public void testThatWhenDigitsAreInputted_IGetAnArrayOfTheDigit(){
+        int [] digits = {1,2,3,4,5};
+        assertArrayEquals(digits, creditCard.getArrayOf(12345));
+    }
+
+    @Test
+    public void testThatWhenDigitsAreInputted_IGetAnArrayOfTheDigits_WithTheSecondDigitsDoubled_FromRightToLeft(){
+        int [] doubledDigits = {2,2,6,4,10,6};
+        assertArrayEquals(doubledDigits, creditCard.doubleSecondElementsRightToLeft(123456));
+    }
+
+    @Test
+    public void testThatWhenDigitsAreInputted_IGetAnArrayOfTheDigits_WithTheSecondDigitsDoubled_FromRightToLeft_WithoutAnyDoubleDigit() {
+        int[] doubledDigits = {2, 2, 6, 4, 1, 6};
+        assertArrayEquals(doubledDigits, creditCard.doubleSecondElementsRightToLeftNoDoubleDigitElement(123456));
+    }
+
+    @Test
+    public void testThatWhenDigitAreInputted_IGetTheSumOfTheSecondDigits_FromRightToLeft_WithoutAnyDoubleDigit(){
+        assertEquals(9,creditCard.sumOfSecondDigitsRightToLeft(123456));
+    }
+
+    @Test
+    public  void testThatWhenDigitAreInputted_IGetTheSumOfTheOddPlacedDigits_FromRightToLeft_WithoutAnyDoubleDigit(){
+        assertEquals(12,creditCard.sumOfOddPlacedDigitsRightToLeft(123456));
+    }
+
+    @Test
+    public void testThatWhenDigitsAreInputted_IGetTheSumOf_TheSumOfTheOddPlacedDigits_FromRightToLeft_WithoutAnyDoubleDigit_AndTheSumOfTheSecondDigits_FromRightToLeft_WithoutAnyDoubleDigit(){
+        assertEquals(21,creditCard.sumOfOddPlacedSecondDigitsRightToLeft(123456));
+    }
+
+    @Test
+    public void testThatWhenDigitsAreInputted_IfTheSumOfThe_SumOfOddPlaceDigitsFromRightToLeftWithoutAnyDoubleDigits_AndTheSumOfTheSecondDigits_FromRightToLeft_WithoutAnyDoubleDigit_IsDivisibleByFour_CardIsValid(){
+        assertTrue(creditCard.isCardValid(5399831619690403L));
+    }
 }
