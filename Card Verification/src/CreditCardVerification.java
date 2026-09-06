@@ -1,6 +1,6 @@
 public class CreditCardVerification {
 
-    public boolean isLenghtValid(long cardNumber) {
+    public boolean isLengthValid(long cardNumber) {
         boolean isCreditCardValid = false;
         int counter = getCardLength(cardNumber);
         if(counter >= 13 && counter <= 16){
