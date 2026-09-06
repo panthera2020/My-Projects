@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         Function function = new Function();
 
@@ -40,7 +40,7 @@ public class Main {
                     String numberOfSubjects = input.nextLine();
                     if(function.isInputValid(studentNumber) && studentNumber.equals("1") && function.isNumberOfSubjectValid(numberOfSubjects)){
                         numberOfStudents = Integer.parseInt(numberOfSubjects);
-                        eachStudent = new ArrayList<>(numberOfStudents));
+                        eachStudent = new ArrayList<>(numberOfStudents);
                         for(int newStudent = 0; newStudent < numberOfStudents; newStudent++){
                             Student newStudents = new Student();
                             newStudents.registerNumberOfSubjects(Integer.parseInt(numberOfSubjects));
