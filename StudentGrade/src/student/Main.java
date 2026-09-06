@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    static void main(String[] args) {
+    public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         Function function = new Function();
 
@@ -30,40 +30,51 @@ public class Main {
             ===============================================
                        \s""";
                 ArrayList<Student> eachStudent = new ArrayList<>();
-                int studentMenuChoice = -1;
                 int numberOfStudents = 0;
+                String numberOfSubjects = "";
+                String studentNumber = "";
+
+                int studentMenuChoice = -1;
                 while(studentMenuChoice != 0){
                     IO.println(registerStudentMenu);
-                    IO.println("How many students do you have?");
-                    String studentNumber = input.nextLine();
-                    IO.println("How many subjects do they offer?");
-                    String numberOfSubjects = input.nextLine();
-                    if(function.isInputValid(studentNumber) && studentNumber.equals("1") && function.isNumberOfSubjectValid(numberOfSubjects)){
-                        numberOfStudents = Integer.parseInt(numberOfSubjects);
-                        eachStudent = new ArrayList<>(numberOfStudents);
-                        for(int newStudent = 0; newStudent < numberOfStudents; newStudent++){
-                            Student newStudents = new Student();
-                            newStudents.registerNumberOfSubjects(Integer.parseInt(numberOfSubjects));
-                            eachStudent.add(newStudents);
+                    String studentMenu = input.nextLine();
+                    if(function.isInputValid(studentMenu) && studentMenu.equals("1")){
+
+                        IO.println("How many students do you have?");
+                        studentNumber = input.nextLine();
+                        IO.println("How many subjects do they offer?");
+                        numberOfSubjects = input.nextLine();
+                        if(function.isNumberOfSubjectValid(studentNumber) && function.isNumberOfSubjectValid(numberOfSubjects)){
+                            numberOfStudents = Integer.parseInt(studentNumber);
+                            eachStudent = new ArrayList<>(numberOfStudents);
+                            for(int newStudent = 0; newStudent < numberOfStudents; newStudent++){
+                                Student newStudents = new Student();
+                                newStudents.registerNumberOfSubjects(Integer.parseInt(numberOfSubjects));
+                                eachStudent.add(newStudents);
+                            }
+                            IO.println("Saving >>>>>>>>>>>>>>>>>>>>>>>>>>");
+                            IO.println("Saved successfully");
+                            IO.println();
                         }
-                        IO.println("Saving >>>>>>>>>>>>>>>>>>>>>>>>>>");
-                        IO.println("Saved successfully");
-                        IO.println();
-                    }else if(function.isInputValid(studentNumber) && studentNumber.equals("2") && function.isNumberOfSubjectValid(numberOfSubjects)){
-                        for(int student = 0; student < eachStudent.size(); student++){
-                            for(int subject = 0; subject < Integer.parseInt(numberOfSubjects); subject++){
-                                IO.println("Entering score for student " + (student +  1));
-                                IO.println("Enter score for subject " + eachStudent.get(student).getSubject(subject + 1));
-                                int score = input.nextInt();
-                                eachStudent.get(student).addGrade(subject + 1, score);
-                                IO.println("Saving >>>>>>>>>>>>>>>>>>>>>>>>>>");
-                                IO.println("Saved successfully");
+                    }else if(function.isInputValid(studentMenu) && studentMenu.equals("2")){
+                        if(eachStudent.isEmpty()){
+                            IO.println("No students registered");
+                        }else{
+                            for(int student = 0; student < eachStudent.size(); student++){
+                                for(int subject = 1; subject <= Integer.parseInt(numberOfSubjects); subject++){
+                                    IO.println("Entering score for student " + (student +  1));
+                                    IO.println("Enter score for subject " + eachStudent.get(student).getSubject(subject));
+                                    int score = input.nextInt();
+                                    eachStudent.get(student).addGrade(subject, score);
+                                    IO.println("Saving >>>>>>>>>>>>>>>>>>>>>>>>>>");
+                                    IO.println("Saved successfully");
+                                }
                             }
                         }
-                    }else if(function.isInputValid(studentNumber) && studentNumber.equals("0")){
+                    }else if(function.isInputValid(studentMenu) && studentMenu.equals("0")){
                         studentMenuChoice = 0;
                     }else{
-                        IO.println("Invalid Input");
+                        IO.println("Invalid input!");
                     }
                 }
             }else if(function.isInputValid(choice) && choice.equals("0")){
@@ -71,6 +82,7 @@ public class Main {
             }else{
                 IO.println();
                 IO.println("Invalid choice. \nEnter Valid Choice.");
+                IO.println();
             }
 
         }
