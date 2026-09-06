@@ -106,4 +106,9 @@ public class CreditCardVerificationTest {
     public void testThatWhenDigitsAreInputted_IfTheSumOfThe_SumOfOddPlaceDigitsFromRightToLeftWithoutAnyDoubleDigits_AndTheSumOfTheSecondDigits_FromRightToLeft_WithoutAnyDoubleDigit_IsDivisibleByFour_CardIsValid(){
         assertTrue(creditCard.isCardValid(5399831619690403L));
     }
+
+    @Test
+    public void testThatWhenDigitsAreInputted_IGetLengthOfDigitsInputted(){
+        assertEquals(15,creditCard.getCardLength(539987465855678L));
+    }
 }

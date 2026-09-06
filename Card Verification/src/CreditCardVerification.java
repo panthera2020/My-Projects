@@ -1,22 +1,22 @@
 public class CreditCardVerification {
 
     public boolean isLenghtValid(long cardNumber) {
-        int counter = 0;
-        boolean isCreditCardValid = true;
+        boolean isCreditCardValid = false;
+        int counter = getCardLength(cardNumber);
+        if(counter >= 13 && counter <= 16){
+            isCreditCardValid = true;
+        }
+        return isCreditCardValid;
+    }
 
+    public int getCardLength(long cardNumber) {
+        int counter = 0;
         while(cardNumber != 0){
             long numbersInIntegers = cardNumber % 10;
             counter++;
             cardNumber /= 10;
         }
-
-        if(counter >= 13 && counter <= 16){
-            isCreditCardValid = true;
-        }else{
-            isCreditCardValid = false;
-        }
-
-        return isCreditCardValid;
+        return counter;
     }
 
     public boolean isFirstDigitValid(long cardNumber) {
