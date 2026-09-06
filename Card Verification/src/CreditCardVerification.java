@@ -12,7 +12,6 @@ public class CreditCardVerification {
     public int getCardLength(long cardNumber) {
         int counter = 0;
         while(cardNumber != 0){
-            long numbersInIntegers = cardNumber % 10;
             counter++;
             cardNumber /= 10;
         }
@@ -24,11 +23,8 @@ public class CreditCardVerification {
         char firstDigit = cardNumberString.charAt(0);
         char secondDigit = cardNumberString.charAt(1);
 
-        boolean isFirstDigit = false;
+        boolean isFirstDigit = firstDigit == '4' || firstDigit == '5' || firstDigit == '6' || (firstDigit == '3' && secondDigit == '7');
 
-        if(firstDigit == '4' || firstDigit == '5' || firstDigit == '6' || (firstDigit == '3' && secondDigit == '7')){
-            isFirstDigit = true;
-        }
         return isFirstDigit;
     }
 
