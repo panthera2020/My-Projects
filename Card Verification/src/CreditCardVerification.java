@@ -97,7 +97,6 @@ public class CreditCardVerification {
         return sum;
     }
 
-
     public int sumOfOddPlacedSecondDigitsRightToLeft(long numbers) {
         return sumOfOddPlacedDigitsRightToLeft(numbers) + sumOfSecondDigitsRightToLeft(numbers);
     }
