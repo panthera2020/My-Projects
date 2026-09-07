@@ -33,9 +33,9 @@ public class Main {
                 ArrayList<Student> eachStudent = new ArrayList<>();
                 int numberOfStudents = 0;
                 String numberOfSubjects = "";
-                String studentNumber = "";
 
                 int studentMenuChoice = -1;
+                String studentNumber = "";
                 while(studentMenuChoice != 0){
                     IO.println(registerStudentMenu);
                     String studentMenu = input.nextLine();

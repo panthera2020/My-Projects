@@ -18,35 +18,19 @@ public class Bike {
 
     public void accelerate() {
         if(isOn) {
-            if(speed >= 40){
-                speed += 4;
-            }
-            else if(speed >= 30){
-                speed += 3;
-            }
-            else if(speed >= 20){
-                speed += 2;
-            }
-            else{
-                speed++;
-            }
+            if(speed >= 40) speed += 4;
+            else if(speed >= 30) speed += 3;
+            else if(speed >= 20) speed += 2;
+            else speed++;
         }
-
     }
 
     public void brake() {
         if(isOn) {
-            if(speed >= 40){
-                speed -= 4;
-            }
-            else if(speed >= 30){
-                speed -= 3;
-            }
-            else if(speed > 20){
-                speed -= 2;
-            }else{
-                speed--;
-            }
+            if(speed >= 40) speed -= 4;
+            else if(speed >= 30) speed -= 3;
+            else if(speed > 20) speed -= 2;
+            else speed--;
         }
     }
 }
