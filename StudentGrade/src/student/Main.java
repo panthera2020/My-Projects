@@ -83,15 +83,24 @@ public class Main {
                             IO.println("No students registered");
                         }else{
                             int [] studentsPosition = teacher.getStudentPositions();
-                            IO.println(Arrays.toString(studentsPosition));
                             IO.println("================================================================");
-                            System.out.printf(" %-5s %10s %5s %5s %5s %5s %5s%n", "STUDENTS", "SUB1", "SUB2", "SUB3", "TOTAL", "AVE", "POS");
+                            System.out.printf(" %-10s", "STUDENTS");
+                            for(int subject = 1; subject <= Integer.parseInt(numberOfSubjects); subject++){
+                                System.out.printf(" %5s", "SUB" + subject);
+                            }
+                            System.out.printf(" %5s %5s %5s%n", "TOTAL", "AVE", "POS");
                             IO.println("================================================================");
                             int count = 0;
                             int position = 0;
                             for (Student student : eachStudent) {
                                 count++;
-                                System.out.printf(" %-5s %10s %5s %5s %5s %5s %5s%n", "Student " + count , student.checkGrade(1),student.checkGrade(2),student.checkGrade(3), teacher.getStudentTotalGrade(student),teacher.getStudentAverage(student), studentsPosition[position]);
+
+                                System.out.printf(" %-10s", "Student " + count);
+                                for(int subject = 1; subject <= Integer.parseInt(numberOfSubjects); subject++){
+                                    System.out.printf(" %5s", student.checkGrade(subject));
+                                }
+                                System.out.printf(" %5s %5s %5s%n", teacher.getStudentTotalGrade(student), teacher.getStudentAverage(student), studentsPosition[position]);
+
                                 position++;
                             }
                             IO.println("================================================================");
