@@ -3,6 +3,7 @@ package student;
 public class Student {
     private int [] subjects;
     private int [] grades;
+    private int numberOfSubject = 0;
 
     public int [] getSubjects(){
         if(subjects == null) throw new NullPointerException("subjects is null");
@@ -18,7 +19,12 @@ public class Student {
         if(numberOfSubjects > 0){
             this.subjects = new int [numberOfSubjects];
             this.grades = new int [numberOfSubjects];
+            numberOfSubject = numberOfSubjects;
         }
+    }
+
+    public int getNumberOfSubjects(){
+        return numberOfSubject;
     }
 
     public int getSubject(int subject) {
