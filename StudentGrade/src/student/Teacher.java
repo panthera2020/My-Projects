@@ -29,7 +29,7 @@ public class Teacher {
     public int [] getStudentPositions() {
         double [] averageGrades = getStudentsAverage();
         int [] studentPositions = new int[gradeBook.size()];
-        for(int eachStudent = 0; eachStudent < studentPositions.length; eachStudent++){studentPositions[eachStudent] = eachStudent;}
+        for(int eachStudent = 0; eachStudent < studentPositions.length; eachStudent++){studentPositions[eachStudent] = eachStudent;-+}
 
         for(int index = 0; index < gradeBook.size(); index++){
             for(int count = 1; count < gradeBook.size(); count++){
