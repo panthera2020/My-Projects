@@ -93,22 +93,17 @@ public class Teacher {
     }
 
     public int [] getArrayOfFailedStudents() {
-        int [] failedStudents = new int[gradeBook.size()];
-        ArrayList<Student> studentsRegistered = checkGradeBook();
-
-        int count = 0;
-        for(Student student : studentsRegistered){
-            failedStudents[count++] = getNumberOfStudentsThatFailed(student.getSubject(count));
+        int [] failedStudents = new int[gradeBook.get(0).getNumberOfSubjects()];
+        for(int subject = 1; subject <= failedStudents.length; subject++){
+            failedStudents[subject - 1] = getNumberOfStudentsThatFailed(subject);
         }
         return failedStudents;
     }
 
     public int [] getArrayOfPassedStudents() {
-        int [] passedStudents = new int[gradeBook.size()];
-        ArrayList<Student> studentsRegistered = checkGradeBook();
-        int count = 0;
-        for(Student student : studentsRegistered){
-            passedStudents[count++] = getNumberOfStudentsThatPassed(student.getSubject(count));
+        int [] passedStudents = new int[gradeBook.get(0).getNumberOfSubjects()];
+        for(int subject = 1; subject <= passedStudents.length; subject++){
+            passedStudents[subject - 1] = getNumberOfStudentsThatPassed(subject);
         }
         return passedStudents;
     }
@@ -169,6 +164,32 @@ public class Teacher {
             allScores.add(eachStudentGrade);
         }
         return allScores.toArray(new int [][]{});
+    }
+
+    public int getOverallHighestScore() {
+        int highestScore = 0;
+        int [][] allScores = getAllStudentsScore();
+        for(int index = 0; index < allScores.length; index++){
+            for(int grade = 0; grade < allScores[index].length; grade++){
+                if(allScores[index][grade] > highestScore){
+                    highestScore = allScores[index][grade];
+                }
+            }
+        }
+        return highestScore;
+    }
+
+    public int getOverallLowestScore() {
+        int [][] allScores = getAllStudentsScore();
+        int lowestScore = allScores[0][0];
+        for(int index = 0; index < allScores.length; index++){
+            for(int grade = 0; grade < allScores[index].length; grade++){
+                if(allScores[index][grade] < lowestScore){
+                    lowestScore = allScores[index][grade];
+                }
+            }
+        }
+        return lowestScore;
     }
 
     public int getStudentWithHighestOverallScore() {
@@ -306,4 +327,85 @@ public class Teacher {
     public double getTotalAverageOfStudentScore() {
         return (Math.floor(((double)getTotalSumOfStudentsScores() / gradeBook.size()) * 10)) / 10;
     }
+
+    public int getHighestScoreIn(int subject) {
+        int [][] studentsScore = getAllStudentsScore();
+        int highestScore = studentsScore[0][subject - 1];
+        for(int index = 0; index < studentsScore.length; index++){
+            if(studentsScore[index][subject -1] > highestScore){
+                highestScore = studentsScore[index][subject -1];
+            }
+        }
+        return highestScore;
+    }
+
+    public int getLowestScoreIn(int subject) {
+        int [][] studentsScore = getAllStudentsScore();
+        int lowestScore = studentsScore[0][subject - 1];
+        for(int index = 0; index < studentsScore.length; index++){
+            if(studentsScore[index][subject -1] < lowestScore){
+                lowestScore = studentsScore[index][subject -1];
+            }
+        }
+        return lowestScore;
+    }
+
+    public int getStudentWithHighestScoreIn(int subject) {
+        int [][] studentsScore = getAllStudentsScore();
+        int studentWithHighestScore = 1;
+        int highestScore = studentsScore[0][subject - 1];
+        for(int index = 0; index < studentsScore.length; index++){
+            if(studentsScore[index][subject -1] > highestScore){
+                highestScore = studentsScore[index][subject -1];
+                studentWithHighestScore = index + 1;
+            }
+        }
+        return studentWithHighestScore;
+    }
+
+    public int getStudentWithLowestScoreIn(int subject) {
+        int [][] studentsScore = getAllStudentsScore();
+        int studentWithLowestScore = 1;
+        int lowestScore = studentsScore[0][subject - 1];
+        for(int index = 0; index < studentsScore.length; index++){
+            if(studentsScore[index][subject -1] < lowestScore){
+                lowestScore = studentsScore[index][subject -1];
+                studentWithLowestScore = index + 1;
+            }
+        }
+        return studentWithLowestScore;
+    }
+
+    public int getSumOfScoreIn(int subject) {
+        int [][] studentsScore = getAllStudentsScore();
+        int sumOfScore = 0;
+        for(int index = 0; index < studentsScore.length; index++){
+            sumOfScore += studentsScore[index][subject -1];
+        }
+        return sumOfScore;
+    }
+
+    public int getNumberOfPassIn(int subject) {
+        int [][] studentsScore = getAllStudentsScore();
+        int numberOfPass = 0;
+        for(int index = 0; index < studentsScore.length; index++){
+            if(studentsScore[index][subject -1] >= 50){
+                numberOfPass++;
+            }
+        }
+        return numberOfPass;
+    }
+
+    public int getNumberOfFailIn(int subject) {
+        int [][] studentsScore = getAllStudentsScore();
+        int numberOfFail = 0;
+        for(int index = 0; index < studentsScore.length; index++){
+            if(studentsScore[index][subject -1] < 50){
+                numberOfFail++;
+            }
+        }
+        return numberOfFail;
+    }
+
+
 }

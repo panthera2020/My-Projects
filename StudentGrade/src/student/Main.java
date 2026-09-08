@@ -1,12 +1,14 @@
 package student;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         Function function = new Function();
+        Teacher teacher = new Teacher();
 
         String welcomeMessage = """
             =============================================
@@ -26,6 +28,7 @@ public class Main {
             TO ENTER NUMBER OF STUDENTS -> PRESS 1
             TO ENTER GRADES             -> PRESS 2
             TO DISPLAY ALL GRADES       -> PRESS 3
+            TO DISPLAY SUMMARY          -> PRESS 4
             ===============================================
             TO EXIT                     -> PRESS 0
             ===============================================
@@ -52,6 +55,7 @@ public class Main {
                                 Student newStudents = new Student();
                                 newStudents.registerNumberOfSubjects(Integer.parseInt(numberOfSubjects));
                                 eachStudent.add(newStudents);
+                                teacher.addStudent(newStudents);
                             }
                             IO.println("Saving >>>>>>>>>>>>>>>>>>>>>>>>>>");
                             IO.println("Saved successfully");
@@ -78,7 +82,60 @@ public class Main {
                         if(eachStudent.isEmpty()){
                             IO.println("No students registered");
                         }else{
+                            int [] studentsPosition = teacher.getStudentPositions();
+                            IO.println(Arrays.toString(studentsPosition));
+                            IO.println("================================================================");
+                            System.out.printf(" %-5s %10s %5s %5s %5s %5s %5s%n", "STUDENTS", "SUB1", "SUB2", "SUB3", "TOTAL", "AVE", "POS");
+                            IO.println("================================================================");
+                            int count = 0;
+                            int position = 0;
+                            for (Student student : eachStudent) {
+                                count++;
+                                System.out.printf(" %-5s %10s %5s %5s %5s %5s %5s%n", "Student " + count , student.checkGrade(1),student.checkGrade(2),student.checkGrade(3), teacher.getStudentTotalGrade(student),teacher.getStudentAverage(student), studentsPosition[position]);
+                                position++;
+                            }
+                            IO.println("================================================================");
+                        }
+                    }else if(function.isInputValid(studentMenu) && studentMenu.equals("4")){
+                        if(eachStudent.isEmpty()){
+                            IO.println("No students registered");
+                        }else{
+                            IO.println("SUBJECT SUMMARY");
+                            for(int student = 0; student < Integer.parseInt(numberOfSubjects); student++){
+                                IO.println("Subject" + (student + 1));
+                                IO.println("Highest Scoring Student is Student " + teacher.getStudentWithHighestScoreIn(student + 1) + " scoring " + teacher.getHighestScoreIn(student + 1));
+                                IO.println("Lowest Scoring Student is Student " + teacher.getStudentWithLowestScoreIn(student + 1) +  " scoring " + teacher.getLowestScoreIn(student + 1));
+                                IO.println("Total Score : " + teacher.getSumOfScoreIn(student + 1));
+                                IO.println("Average Score : " + (teacher.getSumOfScoreIn(student + 1) / eachStudent.size()));
+                                IO.println("Number of passes : " + teacher.getNumberOfPassIn(student + 1));
+                                IO.println("Number of failures : " + teacher.getNumberOfFailIn(student + 1));
+                                IO.println();
+                            }
 
+                            IO.println("The hardest subject is Subject " + teacher.getHardestSubject() + " with " + teacher.getNumberOfFailIn(teacher.getHardestSubject()) + " failures ");
+                            IO.println("The easiest subject is Subject " + teacher.getEasiestSubject() + " with " + teacher.getNumberOfPassIn(teacher.getEasiestSubject()) + " passes ");
+                            IO.println("The Overall highest score is scored by Student " + teacher.getStudentWithHighestOverallScore() + "  in " + teacher.getSubjectWithHighestOverallScore() + " scoring " + teacher.getOverallHighestScore());
+                            IO.println("The Overall lowest score is scored by Student " + teacher.getStudentWithLowestOverallScore() + " in " +  teacher.getSubjectWithLowestOverallScore() + " scoring " + teacher.getOverallLowestScore());
+                            IO.println();
+                            IO.println("CLASS SUMMARY");
+                            IO.println("================================================================");
+                            IO.println("Best Graduating Student is Student " + teacher.getStudentWithHighestOverallScore() + " scoring " + teacher.getBestStudentScore());
+                            IO.println("================================================================");
+
+                            IO.println();
+                            IO.println();
+                            IO.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                            IO.println("Worst Graduating Student is Student " + teacher.getStudentWithLowestOverallScore() + " scoring " + teacher.getWorstStudentScore());
+                            IO.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+                            IO.println();
+                            IO.println();
+                            IO.println("================================================================");
+                            IO.println("Class Total Score: " + teacher.getTotalSumOfStudentsScores());
+                            IO.println("Class Average Score: " + teacher.getTotalAverageOfStudentScore());
+                            IO.println("================================================================");
+                            IO.println();
+                            IO.println();
                         }
                     }
                     else{

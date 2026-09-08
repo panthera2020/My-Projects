@@ -376,6 +376,189 @@ public class TeacherTest {
     }
 
     @Test
+    public void testThatWhenStudentsAreAdded_AndSubjectsAndGradesAreAdded_ICanCheckForAllTheGradesOfAllTheStudents_ICanGetHighestScoreForEachSubject(){
+        Student student1 = new Student();
+        student1.registerNumberOfSubjects(3);
+        student1.addGrade(1, 45);
+        student1.addGrade(2, 75);
+        student1.addGrade(3, 25);
+        teacher.addStudent(student1);
+        Student student2 = new Student();
+        student2.registerNumberOfSubjects(3);
+        student2.addGrade(1, 20);
+        student2.addGrade(2, 75);
+        student2.addGrade(3, 65);
+        teacher.addStudent(student2);
+        Student student3 = new Student();
+        student3.registerNumberOfSubjects(3);
+        student3.addGrade(1, 90);
+        student3.addGrade(2, 75);
+        student3.addGrade(3, 65);
+        teacher.addStudent(student3);
+        int[][] expectedScoresOfStudents = {{45, 75, 25}, {20, 75, 65}, {90, 75, 65}};
+        assertArrayEquals(expectedScoresOfStudents, teacher.getAllStudentsScore());
+        assertEquals(90, teacher.getHighestScoreIn(1));
+    }
+
+
+
+    @Test
+    public void testThatWhenStudentsAreAdded_AndSubjectsAndGradesAreAdded_ICanCheckForAllTheGradesOfAllTheStudents_ICanGetStudentWithHighestScoreInSubject(){
+        Student student1 = new Student();
+        student1.registerNumberOfSubjects(3);
+        student1.addGrade(1, 45);
+        student1.addGrade(2, 75);
+        student1.addGrade(3, 25);
+        teacher.addStudent(student1);
+        Student student2 = new Student();
+        student2.registerNumberOfSubjects(3);
+        student2.addGrade(1, 20);
+        student2.addGrade(2, 75);
+        student2.addGrade(3, 65);
+        teacher.addStudent(student2);
+        Student student3 = new Student();
+        student3.registerNumberOfSubjects(3);
+        student3.addGrade(1, 90);
+        student3.addGrade(2, 75);
+        student3.addGrade(3, 65);
+        teacher.addStudent(student3);
+        int[][] expectedScoresOfStudents = {{45, 75, 25}, {20, 75, 65}, {90, 75, 65}};
+        assertArrayEquals(expectedScoresOfStudents, teacher.getAllStudentsScore());
+        assertEquals(3, teacher.getStudentWithHighestScoreIn(1));
+    }
+
+    @Test
+    public void testThatWhenStudentsAreAdded_AndSubjectsAndGradesAreAdded_ICanCheckForAllTheGradesOfAllTheStudents_ICanGetLowestScoreForEachSubject(){
+        Student student1 = new Student();
+        student1.registerNumberOfSubjects(3);
+        student1.addGrade(1, 45);
+        student1.addGrade(2, 75);
+        student1.addGrade(3, 25);
+        teacher.addStudent(student1);
+        Student student2 = new Student();
+        student2.registerNumberOfSubjects(3);
+        student2.addGrade(1, 20);
+        student2.addGrade(2, 75);
+        student2.addGrade(3, 65);
+        teacher.addStudent(student2);
+        Student student3 = new Student();
+        student3.registerNumberOfSubjects(3);
+        student3.addGrade(1, 90);
+        student3.addGrade(2, 75);
+        student3.addGrade(3, 65);
+        teacher.addStudent(student3);
+        int[][] expectedScoresOfStudents = {{45, 75, 25}, {20, 75, 65}, {90, 75, 65}};
+        assertArrayEquals(expectedScoresOfStudents, teacher.getAllStudentsScore());
+        assertEquals(20, teacher.getLowestScoreIn(1));
+    }
+
+    @Test
+    public void testThatWhenStudentsAreAdded_AndSubjectsAndGradesAreAdded_ICanCheckForAllTheGradesOfAllTheStudents_ICanGetStudentWithLowestScoreInSubject(){
+        Student student1 = new Student();
+        student1.registerNumberOfSubjects(3);
+        student1.addGrade(1, 45);
+        student1.addGrade(2, 75);
+        student1.addGrade(3, 25);
+        teacher.addStudent(student1);
+        Student student2 = new Student();
+        student2.registerNumberOfSubjects(3);
+        student2.addGrade(1, 20);
+        student2.addGrade(2, 75);
+        student2.addGrade(3, 65);
+        teacher.addStudent(student2);
+        Student student3 = new Student();
+        student3.registerNumberOfSubjects(3);
+        student3.addGrade(1, 90);
+        student3.addGrade(2, 75);
+        student3.addGrade(3, 65);
+        teacher.addStudent(student3);
+        int[][] expectedScoresOfStudents = {{45, 75, 25}, {20, 75, 65}, {90, 75, 65}};
+        assertArrayEquals(expectedScoresOfStudents, teacher.getAllStudentsScore());
+        assertEquals(2, teacher.getStudentWithLowestScoreIn(1));
+    }
+
+    @Test
+    public void testThatWhenStudentsAreAdded_AndSubjectsAndGradesAreAdded_ICanCheckForAllTheGradesOfAllTheStudents_AndGetTheSumOfAnySubject(){
+        Student student1 = new Student();
+        student1.registerNumberOfSubjects(3);
+        student1.addGrade(1, 45);
+        student1.addGrade(2, 75);
+        student1.addGrade(3, 25);
+        teacher.addStudent(student1);
+        Student student2 = new Student();
+        student2.registerNumberOfSubjects(3);
+        student2.addGrade(1, 20);
+        student2.addGrade(2, 75);
+        student2.addGrade(3, 65);
+        teacher.addStudent(student2);
+        Student student3 = new Student();
+        student3.registerNumberOfSubjects(3);
+        student3.addGrade(1, 90);
+        student3.addGrade(2, 75);
+        student3.addGrade(3, 65);
+        teacher.addStudent(student3);
+        int[][] expectedScoresOfStudents = {{45, 75, 25}, {20, 75, 65}, {90, 75, 65}};
+        assertArrayEquals(expectedScoresOfStudents, teacher.getAllStudentsScore());
+        assertEquals(155, teacher.getSumOfScoreIn(1));
+        assertEquals(225, teacher.getSumOfScoreIn(2));
+        assertEquals(155, teacher.getSumOfScoreIn(3));
+    }
+
+    @Test
+    public void testThatWhenStudentsAreAdded_AndSubjectsAndGradesAreAdded_ICanCheckForAllTheGradesOfAllTheStudents_AndGetTheNumberOfPassForAnySubject(){
+        Student student1 = new Student();
+        student1.registerNumberOfSubjects(3);
+        student1.addGrade(1, 45);
+        student1.addGrade(2, 75);
+        student1.addGrade(3, 25);
+        teacher.addStudent(student1);
+        Student student2 = new Student();
+        student2.registerNumberOfSubjects(3);
+        student2.addGrade(1, 20);
+        student2.addGrade(2, 75);
+        student2.addGrade(3, 65);
+        teacher.addStudent(student2);
+        Student student3 = new Student();
+        student3.registerNumberOfSubjects(3);
+        student3.addGrade(1, 90);
+        student3.addGrade(2, 75);
+        student3.addGrade(3, 65);
+        teacher.addStudent(student3);
+        int[][] expectedScoresOfStudents = {{45, 75, 25}, {20, 75, 65}, {90, 75, 65}};
+        assertArrayEquals(expectedScoresOfStudents, teacher.getAllStudentsScore());
+        assertEquals(1, teacher.getNumberOfPassIn(1));
+        assertEquals(3, teacher.getNumberOfPassIn(2));
+        assertEquals(2, teacher.getNumberOfPassIn(3));
+    }
+
+    @Test
+    public void testThatWhenStudentsAreAdded_AndSubjectsAndGradesAreAdded_ICanCheckForAllTheGradesOfAllTheStudents_AndGetTheNumberOfFailsForAnySubject(){
+        Student student1 = new Student();
+        student1.registerNumberOfSubjects(3);
+        student1.addGrade(1, 45);
+        student1.addGrade(2, 75);
+        student1.addGrade(3, 25);
+        teacher.addStudent(student1);
+        Student student2 = new Student();
+        student2.registerNumberOfSubjects(3);
+        student2.addGrade(1, 20);
+        student2.addGrade(2, 75);
+        student2.addGrade(3, 65);
+        teacher.addStudent(student2);
+        Student student3 = new Student();
+        student3.registerNumberOfSubjects(3);
+        student3.addGrade(1, 90);
+        student3.addGrade(2, 75);
+        student3.addGrade(3, 65);
+        teacher.addStudent(student3);
+        int[][] expectedScoresOfStudents = {{45, 75, 25}, {20, 75, 65}, {90, 75, 65}};
+        assertArrayEquals(expectedScoresOfStudents, teacher.getAllStudentsScore());
+        assertEquals(2, teacher.getNumberOfFailIn(1));
+        assertEquals(0, teacher.getNumberOfFailIn(2));
+        assertEquals(1, teacher.getNumberOfFailIn(3));
+    }
+
+    @Test
     public void testThatWhenStudentsAreAdded_AndSubjectsAndGradesAreAdded_ICanCheckForAllTheGradesOfAllTheStudents() {
         Student student1 = new Student();
         student1.registerNumberOfSubjects(3);
@@ -672,5 +855,55 @@ public class TeacherTest {
         assertArrayEquals(expectedAverageScoresOfStudents, teacher.getSumOfStudentsScores());
         assertEquals(535, teacher.getTotalSumOfStudentsScores());
         assertEquals(178.3, teacher.getTotalAverageOfStudentScore());
+    }
+
+    @Test
+    public void testThatWhenStudentsAreAdded_AndSubjectsAndGradesAreAdded_IGetOverallHighestScore(){
+        Student student1 = new Student();
+        student1.registerNumberOfSubjects(3);
+        student1.addGrade(1, 45);
+        student1.addGrade(2, 75);
+        student1.addGrade(3, 25);
+        teacher.addStudent(student1);
+        Student student2 = new Student();
+        student2.registerNumberOfSubjects(3);
+        student2.addGrade(1, 20);
+        student2.addGrade(2, 75);
+        student2.addGrade(3, 65);
+        teacher.addStudent(student2);
+        Student student3 = new Student();
+        student3.registerNumberOfSubjects(3);
+        student3.addGrade(1, 90);
+        student3.addGrade(2, 75);
+        student3.addGrade(3, 65);
+        teacher.addStudent(student3);
+        int[][] expectedScoresOfStudents = {{45, 75, 25}, {20, 75, 65}, {90, 75, 65}};
+        assertArrayEquals(expectedScoresOfStudents, teacher.getAllStudentsScore());
+        assertEquals(90, teacher.getOverallHighestScore());
+    }
+
+    @Test
+    public void testThatWhenStudentsAreAdded_AndSubjectsAndGradesAreAdded_IGetOverallLowestScore(){
+        Student student1 = new Student();
+        student1.registerNumberOfSubjects(3);
+        student1.addGrade(1, 45);
+        student1.addGrade(2, 75);
+        student1.addGrade(3, 25);
+        teacher.addStudent(student1);
+        Student student2 = new Student();
+        student2.registerNumberOfSubjects(3);
+        student2.addGrade(1, 20);
+        student2.addGrade(2, 75);
+        student2.addGrade(3, 65);
+        teacher.addStudent(student2);
+        Student student3 = new Student();
+        student3.registerNumberOfSubjects(3);
+        student3.addGrade(1, 90);
+        student3.addGrade(2, 75);
+        student3.addGrade(3, 65);
+        teacher.addStudent(student3);
+        int[][] expectedScoresOfStudents = {{45, 75, 25}, {20, 75, 65}, {90, 75, 65}};
+        assertArrayEquals(expectedScoresOfStudents, teacher.getAllStudentsScore());
+        assertEquals(20, teacher.getOverallLowestScore());
     }
 }
