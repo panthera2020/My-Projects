@@ -28,7 +28,7 @@ public class CreditCardVerificationTest {
     }
 
     @Test
-    public void testThatWhenDigitAreInputted_AndLengthIsValid_AndTheFirstDigitis5_CardIsValid() {
+    public void testThatWhenDigitAreInputted_AndLengthIsValid_AndTheFirstDigitIs5_CardIsValid() {
         assertTrue(creditCard.isLengthValid(539987465855678L));
         assertTrue(creditCard.isFirstDigitValid(539987465855678L));
     }
@@ -52,13 +52,13 @@ public class CreditCardVerificationTest {
     }
 
     @Test
-    public void testThatWhenDigitAreInputted_AndLengthIsValid_AndTheFirstDigitis5_CardTypeIsMasterCard() {
+    public void testThatWhenDigitAreInputted_AndLengthIsValid_AndTheFirstDigitIs5_CardTypeIsMasterCard() {
         assertTrue(creditCard.isLengthValid(539987465855678L));
         assertEquals("MasterCard", creditCard.cardType(539987465855678L));
     }
 
     @Test
-    public void testThatWhenDigitAreInputted_AndLengthIsValid_AndTheFirstDigitis6_CardTypeIsDiscoverCard() {
+    public void testThatWhenDigitAreInputted_AndLengthIsValid_AndTheFirstDigitIs6_CardTypeIsDiscoverCard() {
         assertTrue(creditCard.isLengthValid(639987465855678L));
         assertEquals("Discover Card", creditCard.cardType(639987465855678L));
     }
