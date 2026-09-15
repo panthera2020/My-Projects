@@ -89,4 +89,21 @@ public class LinkedListTest {
         assertEquals(0,linkedList.size);
     }
 
+    @Test
+    public void testThatWhenIInsertAtAnIndexGreaterThanSize_NodeIsNotAdded() {
+        linkedList.append(10);
+        linkedList.append(20);
+        linkedList.append(30);
+        linkedList.insertAt(15,5);
+        assertEquals(3,linkedList.size);
+    }
+
+    @Test
+    public void testThatWhenIInsertAtIndexLessThanZero_NodeIsNotAdded() {
+        linkedList.append(10);
+        linkedList.append(20);
+        linkedList.append(30);
+        linkedList.insertAt(15,-1);
+        assertEquals(3,linkedList.size);
+    }
 }

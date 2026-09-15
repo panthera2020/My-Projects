@@ -36,7 +36,7 @@ public class MyLinkedList {
     public void insertAt(int data, int index) {
         if(index == 0){
             prepend(data);
-        }else{
+        }else if(index <= size && index >= 0){
             Node newNode = new Node(data);
             Node current = head;
             int count = 0;
@@ -48,9 +48,10 @@ public class MyLinkedList {
                 }
                 count++;
                 current = current.next;
+                this.size++;
             }
         }
-        this.size++;
+
     }
 
     public void pop() {
