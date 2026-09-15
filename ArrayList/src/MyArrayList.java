@@ -9,7 +9,6 @@ public class MyArrayList {
             this.elements = new Object[elements.length*2];
             elements[size++] = element;
         }else{ elements[size++] = element; }
-
     }
     public Object get(int index){ return elements[index];}
 
