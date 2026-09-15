@@ -1,8 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LinkedListTest {
     MyLinkedList linkedList;
@@ -39,5 +38,55 @@ public class LinkedListTest {
     }
 
     @Test
+    public void testThatWhenIPrependToLinkedListHeadIsUpdated() {
+        linkedList.append(10);
+        linkedList.append(20);
+        linkedList.prepend(15);
+        assertEquals(15,linkedList.head.data);
+    }
+
+    @Test
+    public void testThatWhenIPrependToAnEmptyLinkedListHeadIsUpdated() {
+        linkedList.prepend(15);
+        assertEquals(15,linkedList.head.data);
+    }
+
+    @Test
+    public void testThatWhenIInsertAtAnIndex_NodeIsAdded() {
+        linkedList.append(10);
+        linkedList.append(20);
+        linkedList.append(30);
+        linkedList.insertAt(15,1);
+        assertEquals(15,linkedList.head.next.data);
+    }
+
+    @Test
+    public void testThatWhenIInsertAtAnIndex0_NodeIsUpdated() {
+        linkedList.append(10);
+        linkedList.append(20);
+        linkedList.insertAt(15,0);
+        assertEquals(15,linkedList.head.data);
+    }
+
+    @Test
+    public void testThatWhenIPopFromALinkedList_LastNodeIsRemoved() {
+        linkedList.append(10);
+        linkedList.append(20);
+        linkedList.append(30);
+        linkedList.pop();
+        assertEquals(2,linkedList.size);
+    }
+
+    @Test
+    public void testThatWhenIPopFromAnEmptyLinkedList_ErrorIsThrown() {
+        assertThrows(NullPointerException.class, () -> linkedList.pop());
+    }
+
+    @Test
+    public void testThatWhenIAddOne_AndPopOneFromALinkedList_NodeIsEmpty() {
+        linkedList.append(10);
+        linkedList.pop();
+        assertEquals(0,linkedList.size);
+    }
 
 }
