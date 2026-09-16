@@ -6,7 +6,9 @@ public class MyArrayList {
 
     public void add(Object element){
         if(size == elements.length - 1){
-            this.elements = new Object[elements.length*2];
+            Object [] temp = new Object[elements.length * 2];
+            for(int index = 0; index < size; index++){ temp[index] = elements[index];}
+            this.elements = temp;
             elements[size++] = element;
         }else{ elements[size++] = element; }
     }
