@@ -1,12 +1,22 @@
 public class Problem {
     private final String name;
-    private final String description;
-    private final String ProblemType;
-    private boolean status;
+    private final ProblemType ProblemType;
+    private boolean status = false;
 
-    public Problem(String name, String description, String ProblemType) {
+    public Problem(String name, ProblemType ProblemType) {
         this.name = name;
-        this.description = description;
         this.ProblemType = ProblemType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void changeStatus(){
+        this.status = true;
+    }
+
+    public boolean getStatus(){
+        return status;
     }
 }
