@@ -10,18 +10,10 @@ public class MySet {
     }
 
     public void add(int element) {
-        if (size == 0) {
+        if(!contains(element)){
             set.add(element);
             size++;
-        }else{
-            for(Object objectIn : set){
-                if(!objectIn.equals(element)){
-                    set.add(element);
-                    size++;
-                }
-            }
         }
-
     }
 
     public boolean contains(Object element) {
@@ -46,5 +38,10 @@ public class MySet {
                 }
             }
         }
+    }
+
+    public void clear() {
+        set.clear();
+        size = 0;
     }
 }

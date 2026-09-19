@@ -55,4 +55,14 @@ public class SetTest {
         set.add(1);
         assertFalse(set.contains(3));
     }
+
+    @Test
+    public void testThatWhenIAddElementsToSet_AndIClearSetIsEmpty(){
+        set.add(1);
+        set.add(2);
+        set.add(3);
+        assertFalse(set.isEmpty());
+        set.clear();
+        assertTrue(set.isEmpty());
+    }
 }
