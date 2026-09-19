@@ -11,11 +11,11 @@ public class MyMap {
     public void put(Object key, Object value) {
         if (size == mapElements.length) {
             Object[][] temp = new Object[mapElements.length*2][2];
-            for(int index = 0; index < mapElements.length; index++){
-                if(mapElements[index][0] != null){
-                    int newIndex = mapElements[index][0].hashCode() % temp.length;
-                    temp[newIndex][0] = mapElements[index][0];
-                    temp[newIndex][1] = mapElements[index][1];
+            for (Object[] mapElement : mapElements) {
+                if (mapElement[0] != null) {
+                    int newIndex = mapElement[0].hashCode() % temp.length;
+                    temp[newIndex][0] = mapElement[0];
+                    temp[newIndex][1] = mapElement[1];
                 }
             }
             this.mapElements = temp;
@@ -34,7 +34,7 @@ public class MyMap {
     }
 
     public boolean containsKey(Object key) {
-        return Objects.equals(mapElements[key.hashCode() % mapElements.length], key);
+        return Objects.equals(mapElements[key.hashCode() % mapElements.length][0], key);
     }
 
 
@@ -48,9 +48,8 @@ public class MyMap {
     public int getSize() {return size; }
 
     public void remove(Object key) {
-        if(isEmpty() || !containsKey(key)){
-            throw new IndexOutOfBoundsException();
-        }else{
+        if(isEmpty() || !containsKey(key)){ throw new IndexOutOfBoundsException();}
+        else{
             int index = key.hashCode() % mapElements.length;
             mapElements[index][1] = null;
             mapElements[index][0] = null;

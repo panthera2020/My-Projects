@@ -84,7 +84,7 @@ public class MapTest {
     public void testThatWhenIAddOneAndRemoveOneFromMap_MapIsEmpty(){
         map.put(10, "boy");
         assertFalse(map.isEmpty());
-        map.remove("10");
+        map.remove(10);
         assertTrue(map.isEmpty());
     }
 
