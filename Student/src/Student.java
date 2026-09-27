@@ -7,6 +7,11 @@ public class Student {
         gradeLevel = 1;
     }
 
+    public Student(String name, int gradeLevel) {
+        this.name = name;
+        this.gradeLevel = gradeLevel;
+    }
+
     public String getName() {return name;}
 
     public void updateName(String newName) {this.name = newName;}

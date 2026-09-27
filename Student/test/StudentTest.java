@@ -68,6 +68,7 @@ public class StudentTest {
 
     @Test
     public void testThatWhenStudentGradeLevelIsNot12_ReturnsFalseThatStudentIsGraduating(){
-        assertFalse(student.isGradauting());
+        Student newStudent = new Student("Bola", 2);
+        assertFalse(newStudent.isGradauting());
     }
 }
