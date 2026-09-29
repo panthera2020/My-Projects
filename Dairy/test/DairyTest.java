@@ -15,17 +15,17 @@ public class DairyTest {
     public void testThatNewDairyCreatedCanAddEntry() {
         String text = "I went to school today";
         diary.logEntry(text);
-        assertEquals("I went to school today", diary.viewEntry("29/09/2026 14:09"));
+        assertEquals("I went to school today", diary.viewEntry("29/09/2026 14:51"));
     }
 
     @Test
-    public void testThatWhenOneEntryIsAddedAndIDeleteEntryIsDeleted_WhenIViewWithTimeStampNotInDiaryErrorEntryNotFoundIsThrown() {
+    public void testThatWhenOneEntryIsAddedAndIDeleteEntryIsDeleted_WhenIViewWithDeletedTimeStampErrorEntryNotFoundIsThrown() {
         String text = "I went to school today";
         diary.logEntry(text);
-        assertEquals("I went to school today", diary.viewEntry("29/09/2026 14:34"));
-        diary.deleteEntry("29/09/2026 14:34");
+        assertEquals("I went to school today", diary.viewEntry("29/09/2026 14:51"));
+        diary.deleteEntry("29/09/2026 14:51");
         try {
-            diary.viewEntry("29/09/2026 14:34");
+            diary.viewEntry("29/09/2026 14:51");
         } catch (IllegalArgumentException e) {
             assertEquals(e.getMessage(), "Entry not found");
         }
@@ -34,7 +34,7 @@ public class DairyTest {
     @Test
     public void testThatWhenIViewEntryNotInDiaryErrorEntryNotFoundIsThrown() {
         try {
-            diary.viewEntry("29/09/2026 14:34");
+            diary.viewEntry("29/09/2026 14:51");
         }catch (IllegalArgumentException e) {
             assertEquals(e.getMessage(), "Entry not found");
         }

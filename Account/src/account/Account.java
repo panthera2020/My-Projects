@@ -1,19 +1,44 @@
 package account;
 
 public class Account {
-    private double balance = 0.0;
+    private int balance;
     private String password;
+    private String accountName;
+    private int accountNumber;
 
-    public Account(String password) {this.password = password;}
+    public int getAccountNumber() { return accountNumber; }
 
-    public double checkBalance(String password) {
-        if (password.equals(this.password)) { return balance;}
-        else{throw new IllegalArgumentException("Wrong password");}
+    public String getAccountName() { return accountName; }
+
+    public void set(int accountNumber) { this.accountNumber = accountNumber;}
+
+    public Account(String accountName,String password) {
+        this.balance = 0;
+        this.password = password;
+        this.accountName = accountName;
     }
 
-    public void deposit(double amount, String password) {if(amount > 0 && password.equals(this.password)) balance += amount;}
+    public int checkBalance(String password) {
+        validate(password);
+        return balance;
+    }
 
-    public void withdraw(double amount, String password) {if(balance >= amount && password.equals(this.password)) balance -= amount;}
+    public void deposit(int amount) {
+        validate(amount);
+        balance += amount;
+    }
+
+    public void withdraw(int amount, String password) {
+        validate(amount);
+        validate(password);
+        boolean balanceIsSufficient = balance >= amount;
+        if(balanceIsSufficient) balance -= amount;
+    }
 
     public void changePassword(String newPassword) {this.password = newPassword;}
+
+    private void validate(int amount){ if(amount < 0) throw new IllegalArgumentException("Invalid amount"); }
+
+    private void validate(String password){ if(!password.equals(this.password)) throw new IllegalArgumentException("Wrong password");}
+
 }
