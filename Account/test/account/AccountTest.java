@@ -86,4 +86,30 @@ public class AccountTest {
         account.set(accountNumber);
         assertEquals(1,account.getAccountNumber());
     }
+
+    @Test
+    public void testThatICannotDepositZeroAmount() {
+        assertThrows(IllegalArgumentException.class, () -> account.deposit(0));
+    }
+
+    @Test
+    public void testThatICannotWithdrawZeroAmount() {
+        account.deposit(5000);
+        assertThrows(IllegalArgumentException.class, () -> account.withdraw(0, correctPassword));
+    }
+
+    @Test
+    public void testThatWhenIWithdrawWithWrongPassword_ErrorIsThrown() {
+        account.deposit(5000);
+        assertEquals(5000, account.checkBalance(correctPassword));
+        assertThrows(IllegalArgumentException.class, () -> account.withdraw(1000, "wrongPassword"));
+    }
+
+    @Test
+    public void testThatWhenIWithdrawExactlyTheFullBalance_BalanceBecomesZero() {
+        account.deposit(5000);
+        assertEquals(5000, account.checkBalance(correctPassword));
+        account.withdraw(5000, correctPassword);
+        assertEquals(0, account.checkBalance(correctPassword));
+    }
 }

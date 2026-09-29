@@ -16,15 +16,13 @@ public class Bank {
 
     public int getNumberOfCustomer() { return accounts.size(); }
 
-    public int checkBalance(int accountNumber, String correctPassword) {
+    public int checkBalance(int accountNumber, String password) {
         validate(accountNumber);
-        return findAccount(accountNumber).checkBalance(correctPassword);
+        return findAccount(accountNumber).checkBalance(password);
     }
 
     private Account findAccount(int accountNumber) {
-        for (Account useraccount : accounts) {
-            if (useraccount.getAccountNumber() == accountNumber) { return useraccount;}
-        }
+        for (Account useraccount : accounts) { if (useraccount.getAccountNumber() == accountNumber) { return useraccount;}}
         return null;
     }
 

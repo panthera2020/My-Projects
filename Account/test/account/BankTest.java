@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class BankTest {
     private Bank bank;
     private final String correctPassword = "1234";
+    private final String wrongPassword = "12345";
     private String name = "Seun";
     private final int accountNumber = 1;
 
@@ -94,5 +95,53 @@ public class BankTest {
     @Test
     public void testThatWhenICheckBalanceFromAccountNumberNotInBankErrorIsThrown(){
         assertThrows(IllegalArgumentException.class,()-> bank.checkBalance(5,correctPassword));
+    }
+
+    @Test
+    public void testThatCheckBalanceWithWrongPassword_ThrowsError() {
+        bank.deposit(5000, accountNumber);
+        assertThrows(IllegalArgumentException.class, () -> bank.checkBalance(accountNumber, wrongPassword));
+    }
+
+    @Test
+    public void testThatWithdrawWithWrongPassword_ThrowsError() {
+        bank.deposit(5000, accountNumber);
+        assertThrows(IllegalArgumentException.class, () -> bank.withdraw(1000, accountNumber, wrongPassword));
+    }
+
+    @Test
+    public void testThatTransferWithWrongSenderPassword_ThrowsError() {
+        bank.deposit(5000, accountNumber);
+        String receiverName = "Bola";
+        String receiverPassword = "4232";
+        bank.createAccount(receiverName, receiverPassword);
+        assertThrows(IllegalArgumentException.class, () -> bank.transfer(5000, accountNumber, 2, wrongPassword));
+    }
+
+    @Test
+    public void testThatTransferWithInsufficientBalance_ThrowsError() {
+        bank.deposit(3000, accountNumber);
+        String receiverName = "Bola";
+        String receiverPassword = "4232";
+        bank.createAccount(receiverName, receiverPassword);
+        assertThrows(IllegalArgumentException.class, () -> bank.transfer(5000, accountNumber, 2, correctPassword));
+    }
+
+    @Test
+    public void testThatDepositNegativeAmountThroughBank_ThrowsError() {
+        assertThrows(IllegalArgumentException.class, () -> bank.deposit(-1000, accountNumber));
+    }
+
+    @Test
+    public void testThatWithdrawNegativeAmountThroughBank_ThrowsError() {
+        bank.deposit(5000, accountNumber);
+        assertThrows(IllegalArgumentException.class, () -> bank.withdraw(-1000, accountNumber, correctPassword));
+    }
+
+    @Test
+    public void testThatTransferWithNegativeAmount_ThrowsError() {
+        bank.deposit(5000, accountNumber);
+        bank.createAccount("Bola", "4232");
+        assertThrows(IllegalArgumentException.class, () -> bank.transfer(-1000, accountNumber, 2, correctPassword));
     }
 }
