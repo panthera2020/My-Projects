@@ -32,4 +32,11 @@ public class BankTest {
         bank.deposit(5000,accountNumber, correctPassword);
         assertEquals(5000,bank.checkBalance(accountNumber,correctPassword));
     }
+
+    @Test
+    public void testThatWhenIDeposit5kAndIWithdraw3kFromAccount_BalanceIs2k(){
+        bank.deposit(5000,accountNumber, correctPassword);
+        bank.withdraw(3000,accountNumber, correctPassword);
+        assertEquals(2000,bank.checkBalance(accountNumber,correctPassword));
+    }
 }

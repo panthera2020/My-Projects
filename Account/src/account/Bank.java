@@ -38,4 +38,9 @@ public class Bank {
         Account foundAccount = findAccount(accountNumber);
         foundAccount.deposit(amount);
     }
+
+    public void withdraw(int amount, int accountNumber, String correctPassword) {
+        Account foundAccount = findAccount(accountNumber);
+        foundAccount.withdraw(amount, correctPassword);
+    }
 }
