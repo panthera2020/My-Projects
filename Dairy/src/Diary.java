@@ -18,7 +18,7 @@ public class Diary {
                 return entry.getEntry();
             }
         }
-        return "";
+        return null;
     }
 
     public void deleteEntry(String timeStamp) {
