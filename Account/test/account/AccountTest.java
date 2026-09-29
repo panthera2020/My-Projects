@@ -47,10 +47,9 @@ public class AccountTest {
     }
 
     @Test
-    public void testThatWhenITryToWithdrawFromNewAccount_BalanceIsZero() {
+    public void testThatWhenITryToWithdrawFromNewAccount_ErrorIsThrown() {
         assertEquals(0,account.checkBalance(correctPassword));
-        account.withdraw(5000,correctPassword);
-        assertEquals(0,account.checkBalance(correctPassword));
+        assertThrows(IllegalArgumentException.class, ()-> account.withdraw(5000,correctPassword));
     }
 
     @Test
@@ -62,12 +61,11 @@ public class AccountTest {
     }
 
     @Test
-    public void testThatWhenIDeposit5k_AndWithdraw7k_BalanceIs5k() {
+    public void testThatWhenIDeposit5k_AndWithdraw7k_ErrorIsThrown() {
         assertEquals(0,account.checkBalance(correctPassword));
         account.deposit(5000);
         assertEquals(5000,account.checkBalance(correctPassword));
-        account.withdraw(7000,correctPassword);
-        assertEquals(5000,account.checkBalance(correctPassword));
+        assertThrows(IllegalArgumentException.class, ()-> account.withdraw(7000,correctPassword));
     }
 
     @Test

@@ -31,13 +31,15 @@ public class Account {
     public void withdraw(int amount, String password) {
         validate(amount);
         validate(password);
-        boolean balanceIsSufficient = balance >= amount;
-        if(balanceIsSufficient) balance -= amount;
+        validateWithdrawal(amount);
+        balance -= amount;
     }
+
+    private void validateWithdrawal(int amount) {if(balance < amount) throw new IllegalArgumentException("Insufficient Balance");}
 
     public void changePassword(String newPassword) {this.password = newPassword;}
 
-    private void validate(int amount){ if(amount < 0) throw new IllegalArgumentException("Invalid amount"); }
+    private void validate(int amount){ if(amount <= 0) throw new IllegalArgumentException("Invalid amount"); }
 
     private void validate(String password){ if(!password.equals(this.password)) throw new IllegalArgumentException("Wrong password");}
 
