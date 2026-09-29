@@ -4,35 +4,37 @@ import java.util.List;
 public class Diary {
     private List<DairyEntry> diaryEntries = new ArrayList<>();
 
-
     public void logEntry(String text) {
         DairyEntry entry = new DairyEntry();
         entry.addEntry(text);
         diaryEntries.add(entry);
     }
 
+    public String viewEntry(int id) {
+        validate(id);
+        return findEntry(id);
+    }
+    public void deleteEntry(int id) {
+        validate(id);
+        diaryEntries.remove(getEntry(id));
+    }
 
-    public String viewEntry(String timeStamp) {
-        for (DairyEntry entry : diaryEntries) {
-            if (entry.getTimeStamp().equals(timeStamp)) {
-                return entry.getEntry();
-            }
-        }
+    private String findEntry(int id) {
+        validate(id);
+        return getEntry(id).getTimeStamp() + "\n" + getEntry(id).getEntry();
+    }
+
+    private DairyEntry getEntry(int id) {
+        for (DairyEntry userEntry : diaryEntries) { if (userEntry.getEntryId() == id) { return userEntry;}}
         return null;
     }
 
-    public void deleteEntry(String timeStamp) {
-        if(!isEntryInDiary(timeStamp)) throw new IllegalArgumentException("Entry Not Found");
-        for (DairyEntry entry : diaryEntries) {
-            if (entry.getTimeStamp().equals(timeStamp)) {
-                diaryEntries.remove(entry);
-                break;
-            }
-        }
+    private boolean doesEntryContain(int id) {
+        for (DairyEntry userEntries : diaryEntries) { if (userEntries.getEntryId() == id) { return true; } }
+        return false;
     }
 
-    private boolean isEntryInDiary(String timeStamp) {
-        for (DairyEntry entry : diaryEntries) { if (entry.getTimeStamp().equals(timeStamp)) { return true; } }
-        return false;
+    private void validate(int id) {
+        if(!doesEntryContain(id)) throw new IllegalArgumentException("Entry Not Found");
     }
 }
