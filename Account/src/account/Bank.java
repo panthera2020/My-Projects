@@ -22,10 +22,8 @@ public class Bank {
     }
 
     private Account findAccount(int accountNumber) {
-        for (Account account : accounts) {
-            if (account.getAccountNumber() == accountNumber) {
-                return account;
-            }
+        for (Account useraccount : accounts) {
+            if (useraccount.getAccountNumber() == accountNumber) { return useraccount;}
         }
         return null;
     }
