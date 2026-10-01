@@ -119,4 +119,9 @@ public class DairyTest {
         assertThrows(IllegalArgumentException.class, () -> diary.findEntry(id));
         assertNotNull(diary.findEntry(2)); // second entry still exists
     }
+
+    @Test
+    public void testThatWhenIUpdateEntryThatDoesNotExist_ErrorIsThrown(){
+        assertThrows(IllegalArgumentException.class, () -> diary.update(id, title, body));
+    }
 }
