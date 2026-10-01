@@ -12,6 +12,7 @@ public class BankTest {
     private final String wrongPassword = "12345";
     private String name = "Seun";
     private final int accountNumber = 1;
+    private final int amount = 5000;
 
     @BeforeEach
     public void setUp(){
@@ -31,46 +32,46 @@ public class BankTest {
 
     @Test
     public void testThatNewAccountCanDeposit(){
-        bank.deposit(5000,accountNumber);
-        assertEquals(5000,bank.checkBalance(accountNumber,correctPassword));
+        bank.deposit(amount,accountNumber);
+        assertEquals(amount,bank.checkBalance(accountNumber,correctPassword));
     }
 
     @Test
     public void testThatWhenIDeposit5kAndIWithdraw3kFromAccount_BalanceIs2k(){
-        bank.deposit(5000,accountNumber);
+        bank.deposit(amount,accountNumber);
         bank.withdraw(3000,accountNumber, correctPassword);
         assertEquals(2000,bank.checkBalance(accountNumber,correctPassword));
     }
 
     @Test
     public void testThatAccountCanTransferFromOneAccountToAnother(){
-        bank.deposit(5000,accountNumber);
+        bank.deposit(amount,accountNumber);
         String receiverName = "Bola";
         String receiverPassword = "4232";
         bank.createAccount(receiverName, receiverPassword);
         int senderAccountNumber = 1;
         int receiverAccountNumber = 2;
         String senderPassword = correctPassword;
-        bank.transfer(5000, senderAccountNumber, receiverAccountNumber,senderPassword);
+        bank.transfer(amount, senderAccountNumber, receiverAccountNumber,senderPassword);
         assertEquals(0,bank.checkBalance(senderAccountNumber,senderPassword));
-        assertEquals(5000,bank.checkBalance(receiverAccountNumber,receiverPassword));
+        assertEquals(amount,bank.checkBalance(receiverAccountNumber,receiverPassword));
     }
 
     @Test
     public void testThatAccountTransferToTheSameAccountNumberThrowsError(){
         int senderAccountNumber = accountNumber;
         int receiverAccountNumber = accountNumber;
-        assertThrows(IllegalArgumentException.class,()-> bank.transfer(5000, senderAccountNumber, receiverAccountNumber,correctPassword));
+        assertThrows(IllegalArgumentException.class,()-> bank.transfer(amount, senderAccountNumber, receiverAccountNumber,correctPassword));
     }
 
     @Test
     public void testThatIfAccountNumberIsNotInBankAndIDeposit_ThrowsError(){
-        assertThrows(IllegalArgumentException.class,()-> bank.deposit(5000,4));
+        assertThrows(IllegalArgumentException.class,()-> bank.deposit(amount,4));
     }
 
     @Test
     public void testThatIfAccountNumberIsNotInBankAndIWithdraw_ThrowsError(){
-        assertThrows(IllegalArgumentException.class,()-> bank.withdraw(5000,5,correctPassword));
+        assertThrows(IllegalArgumentException.class,()-> bank.withdraw(amount,5,correctPassword));
     }
 
     @Test
@@ -82,14 +83,14 @@ public class BankTest {
     public void testThatWhenITransferFromAccountNumberNotInBankErrorIsThrown(){
         int senderAccountNumber = 5;
         int receiverAccountNumber = accountNumber;
-        assertThrows(IllegalArgumentException.class,()-> bank.transfer(5000, senderAccountNumber, receiverAccountNumber,correctPassword));
+        assertThrows(IllegalArgumentException.class,()-> bank.transfer(amount, senderAccountNumber, receiverAccountNumber,correctPassword));
     }
 
     @Test
     public void testThatWhenITransferToAccountNumberNotInBankErrorIsThrown(){
         int senderAccountNumber = accountNumber;
         int receiverAccountNumber = 3;
-        assertThrows(IllegalArgumentException.class,()-> bank.transfer(5000, senderAccountNumber, receiverAccountNumber,correctPassword));
+        assertThrows(IllegalArgumentException.class,()-> bank.transfer(amount, senderAccountNumber, receiverAccountNumber,correctPassword));
     }
 
     @Test
@@ -99,23 +100,23 @@ public class BankTest {
 
     @Test
     public void testThatCheckBalanceWithWrongPassword_ThrowsError() {
-        bank.deposit(5000, accountNumber);
+        bank.deposit(amount, accountNumber);
         assertThrows(IllegalArgumentException.class, () -> bank.checkBalance(accountNumber, wrongPassword));
     }
 
     @Test
     public void testThatWithdrawWithWrongPassword_ThrowsError() {
-        bank.deposit(5000, accountNumber);
+        bank.deposit(amount, accountNumber);
         assertThrows(IllegalArgumentException.class, () -> bank.withdraw(1000, accountNumber, wrongPassword));
     }
 
     @Test
     public void testThatTransferWithWrongSenderPassword_ThrowsError() {
-        bank.deposit(5000, accountNumber);
+        bank.deposit(amount, accountNumber);
         String receiverName = "Bola";
         String receiverPassword = "4232";
         bank.createAccount(receiverName, receiverPassword);
-        assertThrows(IllegalArgumentException.class, () -> bank.transfer(5000, accountNumber, 2, wrongPassword));
+        assertThrows(IllegalArgumentException.class, () -> bank.transfer(amount, accountNumber, 2, wrongPassword));
     }
 
     @Test
@@ -124,7 +125,7 @@ public class BankTest {
         String receiverName = "Bola";
         String receiverPassword = "4232";
         bank.createAccount(receiverName, receiverPassword);
-        assertThrows(IllegalArgumentException.class, () -> bank.transfer(5000, accountNumber, 2, correctPassword));
+        assertThrows(IllegalArgumentException.class, () -> bank.transfer(amount, accountNumber, 2, correctPassword));
     }
 
     @Test
@@ -134,14 +135,29 @@ public class BankTest {
 
     @Test
     public void testThatWithdrawNegativeAmountThroughBank_ThrowsError() {
-        bank.deposit(5000, accountNumber);
+        bank.deposit(amount, accountNumber);
         assertThrows(IllegalArgumentException.class, () -> bank.withdraw(-1000, accountNumber, correctPassword));
     }
 
     @Test
     public void testThatTransferWithNegativeAmount_ThrowsError() {
-        bank.deposit(5000, accountNumber);
+        bank.deposit(amount, accountNumber);
         bank.createAccount("Bola", "4232");
         assertThrows(IllegalArgumentException.class, () -> bank.transfer(-1000, accountNumber, 2, correctPassword));
+    }
+
+    @Test
+    public void testThatWhenITransferFromOneAccountItDecreaseByAmount_RecipientAccountIncreaseByAmount(){
+        bank.deposit(amount, accountNumber);
+        bank.createAccount("Bola", "4232");
+        assertEquals(amount,bank.checkBalance(accountNumber,correctPassword));
+        bank.transfer(amount, accountNumber, 2, correctPassword);
+        assertEquals(0,bank.checkBalance(accountNumber,correctPassword));
+        assertEquals(amount,bank.checkBalance(2,"4232"));
+    }
+
+    @Test
+    public void testThatWhenIHaveAccountNumberICanReturnNameOfCustomer(){
+        assertEquals("Seun",bank.checkAccountName(accountNumber));
     }
 }

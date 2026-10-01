@@ -51,4 +51,9 @@ public class Bank {
     private void validate(int accountNumber) {
         if(findAccount(accountNumber) == null) throw new IllegalArgumentException("Account number not found");
     }
+
+    public String checkAccountName(int accountNumber) {
+        validate(accountNumber);
+        return findAccount(accountNumber).getAccountName();
+    }
 }
