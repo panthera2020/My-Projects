@@ -22,6 +22,11 @@ public class DairyTest {
     }
 
     @Test
+    public void testThatWhenDiaryIsCreated_UserNameIsSet() {
+        assertEquals(userName, diary.getUserName());
+    }
+
+    @Test
     public void testThatWhenDiaryIsCreated_UserCanAddDiaryEntry() {
         diary.createEntry(title,body);
         DairyEntry result = diary.findEntry(id);
@@ -32,12 +37,11 @@ public class DairyTest {
     @Test
     public void testThatUserCanDeleteEntry() {
         diary.createEntry(title,body);
-        String newTitle = "Monday";
-        String newBody = "I went to work";
-        int newId = 1;
+        String newTitle = "Tuesday";
+        String newBody = "I went to the club";
         diary.createEntry(newTitle, newBody);
-        diary.deleteEntry(newId);
-        assertThrows(IllegalArgumentException.class, () -> diary.findEntry(newId));
+        diary.deleteEntry(id);
+        assertThrows(IllegalArgumentException.class, () -> diary.findEntry(id));
     }
 
     @Test
@@ -47,107 +51,72 @@ public class DairyTest {
     }
 
     @Test
-    public void testThatUserCanUnlockDiaryEntryAfterDiaryIsLocked() {
+    public void testThatUserCanUnlockDiaryEntryAfterDiaryIsLockedWithPassword() {
         diary.lockDiary();
         assertTrue(diary.isLocked());
-        diary.unlockDiary();
+        diary.unlockDiary(password);
         assertFalse(diary.isLocked());
     }
 
+    @Test
+    public void testThatUserCanUpdateEntry() {
+        diary.createEntry(title,body);
+        String newTitle = "Tuesday";
+        String newBody = "I went to the club";
+        diary.update(id,newTitle,newBody);
+        DairyEntry result = diary.findEntry(id);
+        assertEquals(newTitle.toUpperCase(),result.getTitle());
+        assertEquals(newBody,result.getBody());
+    }
 
+    @Test
+    public void testThatWhenDiaryIsLocked_UserCannotCreateDiaryEntry_ErrorIsThrown() {
+        diary.lockDiary();
+        assertThrows(IllegalArgumentException.class, () -> diary.createEntry(title,body));
+    }
 
+    @Test
+    public void testThatWhenDiaryIsLocked_UserCannotDeleteDiaryEntry_ErrorIsThrown() {
+        diary.createEntry(title,body);
+        diary.lockDiary();
+        assertThrows(IllegalArgumentException.class, () -> diary.deleteEntry(id));
+    }
 
+    @Test
+    public void testThatWhenDiaryIsLocked_UserCannotFindEntry_ErrorIsThrown() {
+        diary.createEntry(title,body);
+        diary.lockDiary();
+        assertThrows(IllegalArgumentException.class, () -> diary.findEntry(id));
+    }
 
+    @Test
+    public void testThatWHenDiaryIsLocked_UserCannotUpdateDiaryEntry_ErrorIsThrown() {
+        diary.createEntry(title,body);
+        diary.lockDiary();
+        String newTitle = "Tuesday";
+        String newBody = "I went to the club";
+        assertThrows(IllegalArgumentException.class, ()-> diary.update(id,newTitle,newBody));
+    }
 
+    @Test
+    public void testThatWhenIFindEntryOfUnknownId_ErrorIsThrown() {
+        assertThrows(IllegalArgumentException.class, ()-> diary.findEntry(id));
+        diary.createEntry(title,body);
+        assertThrows(IllegalArgumentException.class, ()-> diary.findEntry(2));
+    }
 
+    @Test
+    public void testThatWhenUserEntersWrongPassword_ErrorIsThrown() {
+        diary.lockDiary();
+        assertThrows(IllegalArgumentException.class, () -> diary.unlockDiary("wrongPassword"));
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    private Diary diary;
-//    private String text = "I went to school today";
-//
-//    @BeforeEach
-//    public void setUp() {
-//        diary = new Diary();
-//    }
-//
-//    @Test
-//    public void testThatNewDairyCreatedCanAddEntry() {
-//        diary.logEntry(text);
-//        String result = diary.viewEntry(1);
-//        assertTrue(result.startsWith("30/09/2026"));
-//        assertTrue(result.contains(text));
-//    }
-//
-//    @Test
-//    public void testThatWhenOneEntryIsAddedAndIDeleteEntryIsDeleted_WhenIViewWithDeletedEntryIdErrorEntryNotFoundIsThrown() {
-//        diary.logEntry(text);
-//        String result = diary.viewEntry(1);
-//        assertTrue(result.contains(text));
-//        diary.deleteEntry(1);
-//        try {
-//            diary.viewEntry(1);
-//        } catch (IllegalArgumentException e) {
-//            assertEquals(e.getMessage(), "Entry Not Found");
-//        }
-//    }
-//
-//    @Test
-//    public void testThatWhenITryToViewEntryWithIdNotInDiary_ErrorIsThrown() {
-//        diary.logEntry(text);
-//        assertThrows(IllegalArgumentException.class, () -> diary.viewEntry(5));
-//    }
-//
-//    @Test
-//    public void testThatWhenITryToViewEmptyDiary_ErrorIsThrown() {
-//        assertThrows(IllegalArgumentException.class, () -> diary.viewEntry(5));
-//    }
-//
-//    @Test
-//    public void testThatWhenITryToDeleteFromEmptyDiary_ErrorIsThrown() {
-//        assertThrows(IllegalArgumentException.class, () -> diary.deleteEntry(1));
-//    }
-//
-//    @Test
-//    public void testThatWhenITryToDeleteFromDiaryWithIncorrectId_ErrorIsThrown() {
-//        diary.logEntry(text);
-//        assertThrows(IllegalArgumentException.class, () -> diary.deleteEntry(6));
-//    }
-//
-//    @Test
-//    public void testThatWhenIViewEntryNotInDiaryErrorEntryNotFoundIsThrown() {
-//        try {
-//            diary.viewEntry(1);
-//        }catch (IllegalArgumentException e) {
-//            assertEquals(e.getMessage(), "Entry Not Found");
-//        }
-//    }
-//
-//    @Test
-//    public void testThatWhenIDeleteEntryNotInDiaryErrorEntryNotFoundIsThrown() {
-//        assertThrows(IllegalArgumentException.class, () -> diary.deleteEntry(5));
-//    }
-
+    @Test
+    public void testThatWhenIDeleteEntry_CorrectEntryIsDeleted() {
+        diary.createEntry(title, body);
+        diary.createEntry("Tuesday", "I went to the club");
+        diary.deleteEntry(id);
+        assertThrows(IllegalArgumentException.class, () -> diary.findEntry(id));
+        assertNotNull(diary.findEntry(2)); // second entry still exists
+    }
 }
