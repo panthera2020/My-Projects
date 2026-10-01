@@ -1,5 +1,6 @@
 package account;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Atm {
@@ -40,11 +41,18 @@ public class Atm {
                         depositChoice = input.nextLine();
                         if (depositChoice.equalsIgnoreCase("Yes")) {
                             bank.deposit(amount, accountNumber);
+                            IO.println(amount + " deposited");
                             IO.println("Thank you for Banking with us....");
+                            IO.println();
                         }
                     } catch (IllegalArgumentException e) {
                         IO.println("Error: " + e.getMessage());
                         input.nextLine();
+                        IO.println();
+                    } catch (InputMismatchException e) {
+                        IO.println("Invalid input. Please try again.");
+                        input.nextLine();
+                        IO.println();
                     }
                 }
             }else if (userMenuChoice.equals("2")) {
@@ -59,11 +67,18 @@ public class Atm {
                         input.nextLine();
                         String password = input.nextLine();
                         bank.withdraw(amount, accountNumber, password);
+                        IO.println(amount + " withdrawn");
                         IO.println("Thank you for Banking with us....");
+                        IO.println();
                         withdrawn = true;
                     } catch (IllegalArgumentException e) {
                         IO.println("Error: " + e.getMessage());
                         input.nextLine();
+                        IO.println();
+                    } catch (InputMismatchException e) {
+                        IO.println("Invalid input. Please try again.");
+                        input.nextLine();
+                        IO.println();
                     }
                 }
             }else if (userMenuChoice.equals("3")) {
@@ -85,10 +100,16 @@ public class Atm {
                             String password = input.nextLine();
                             bank.transfer(amount, senderAccountNumber, recipientAccountNumber, password);
                             IO.println("Thank you for Banking with us....");
+                            IO.println();
                         }
                     } catch (IllegalArgumentException e) {
                         IO.println("Error: " + e.getMessage());
                         input.nextLine();
+                        IO.println();
+                    } catch (InputMismatchException e){
+                        IO.println("Invalid input. Please try again.");
+                        input.nextLine();
+                        IO.println();
                     }
                 }
             }else if (userMenuChoice.equals("4")) {
@@ -103,9 +124,15 @@ public class Atm {
                         IO.println("Mr " + bank.checkAccountName(accountNumber));
                         IO.println("Your balance is " + bank.checkBalance(accountNumber, password));
                         IO.println("Thank you for Banking with us....");
+                        IO.println();
                         checked = true;
                     } catch (IllegalArgumentException e) {
                         IO.println("Error: " + e.getMessage());
+                        IO.println();
+                    } catch (InputMismatchException e){
+                        IO.println("Invalid input. Please try again.");
+                        input.nextLine();
+                        IO.println();
                     }
                 }
             }
