@@ -2,23 +2,31 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class DairyEntry {
-    private int entryId = 0;
-    private String text = "";
-    private String timeStamp = "";
+    private int entryId;
+    private String title;
+    private String body;
+    private final String timeStamp;
 
-    public void addEntry(String entry) {
-        canLogEntry();
-        text += entry;
+    public DairyEntry(int entryId, String title, String body) {
+        this.entryId = entryId;
+        this.title = title;
+        this.body = body;
         LocalDateTime time = LocalDateTime.now();
         DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        timeStamp = time.format(timeFormat);
-        entryId++;
+        this.timeStamp = time.format(timeFormat);
     }
 
-    private void canLogEntry(){ if(!text.isEmpty()) throw new IllegalArgumentException("Entry is Logged"); }
-    public String getEntry() { return text;}
+    public void update(String title) { this.title = title; }
 
-    public String getTimeStamp() { return timeStamp; }
+    public String getTitle() { return title.toUpperCase();}
+
+    public void updateText(String body) { this.body = body;}
+
+    public String getBody() { return body;}
+
+    public void updateId(int number){ entryId = number; }
+
+    public String getEntry() { return getTitle() + "\n" + timeStamp + "\n" + getBody(); }
 
     public int getEntryId() { return entryId;}
 }

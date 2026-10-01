@@ -2,32 +2,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Diary {
+    private final String userName;
+    private final String password;
+    private boolean locked;
     private List<DairyEntry> diaryEntries = new ArrayList<>();
 
-    public void logEntry(String text) {
-        DairyEntry entry = new DairyEntry();
-        entry.addEntry(text);
-        diaryEntries.add(entry);
+    public Diary(String userName, String password){
+        this.userName = userName;
+        this.password = password;
+        this.locked = false;
     }
 
-    public String viewEntry(int id) {
-        validate(id);
-        return findEntry(id);
-    }
-    public void deleteEntry(int id) {
-        validate(id);
-        diaryEntries.remove(getEntry(id));
+    public boolean isLocked() {
+        return locked;
     }
 
-    private String findEntry(int id) {
-        validate(id);
-        return getEntry(id).getTimeStamp() + "\n" + getEntry(id).getEntry();
+    private int generateId(){
+        return diaryEntries.size() + 1;
     }
 
-    private DairyEntry getEntry(int id) {
-        for (DairyEntry userEntry : diaryEntries) { if (userEntry.getEntryId() == id) { return userEntry;}}
+    public void createEntry(String title, String body) {
+        DairyEntry newEntry = new DairyEntry(generateId(),title,body);
+        diaryEntries.add(newEntry);
+    }
+
+    public DairyEntry findEntry(int id) {
+        validate(id);
+        for (DairyEntry userEntry : diaryEntries) { if (userEntry.getEntryId() == id) { return userEntry; }}
         return null;
     }
+
+    public void deleteEntry(int id) {
+        validate(id);
+        for (DairyEntry userEntry : diaryEntries) {if (userEntry.getEntryId() == id) { diaryEntries.remove(userEntry); }}
+    }
+
+    public void lockDiary() { locked = true; }
+
+    public void unlockDiary() { locked = false; }
 
     private boolean doesEntryContain(int id) {
         for (DairyEntry userEntries : diaryEntries) { if (userEntries.getEntryId() == id) { return true; } }
@@ -37,4 +49,7 @@ public class Diary {
     private void validate(int id) {
         if(!doesEntryContain(id)) throw new IllegalArgumentException("Entry Not Found");
     }
+
+
+
 }
