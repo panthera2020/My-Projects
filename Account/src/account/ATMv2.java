@@ -52,7 +52,7 @@ public class ATMv2 {
             print("Transfer complete!");
         }
         catch (IllegalArgumentException e) {
-            IO.println(e.getMessage());
+            print(e.getMessage());
         }
         finally {
             goToMainMenu();
@@ -64,10 +64,10 @@ public class ATMv2 {
             int userAccountNumber = requestAccountNumber();
             String userPin = requestPin();
             int balance = gtbBank.checkBalance(userAccountNumber, userPin);
-            IO.println("Your account balance is " + balance);
+            print("Your account balance is " + balance);
         }
         catch (IllegalArgumentException e) {
-            IO.println(e.getMessage());
+            print(e.getMessage());
         }
         finally {
             goToMainMenu();
@@ -84,7 +84,7 @@ public class ATMv2 {
             print("New balance: " + gtbBank.checkBalance(userAccountNumber, userPin));
         }
         catch (IllegalArgumentException e) {
-            IO.println(e.getMessage());
+            print(e.getMessage());
         }
         finally {
             goToMainMenu();
@@ -98,7 +98,7 @@ public class ATMv2 {
             gtbBank.deposit(amount,userAccountNumber);
         }
         catch (IllegalArgumentException e) {
-            IO.println(e.getMessage());
+            print(e.getMessage());
         }
         finally {
             goToMainMenu();
@@ -112,7 +112,7 @@ public class ATMv2 {
             gtbBank.createAccount(userName, userPin);
         }
         catch (IllegalArgumentException e) {
-            IO.println(e.getMessage());
+            print(e.getMessage());
         }
         finally {
             goToMainMenu();
