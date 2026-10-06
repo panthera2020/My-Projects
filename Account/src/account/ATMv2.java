@@ -3,7 +3,7 @@ package account;
 import javax.swing.*;
 
 public class ATMv2 {
-    private static Bank gtbBank = new Bank();
+    private static Bank gtbBank = new Bank("058");
 
     public static void main(String[] args) {
         goToMainMenu();

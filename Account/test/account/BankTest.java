@@ -11,13 +11,13 @@ public class BankTest {
     private final String correctPassword = "1234";
     private final String wrongPassword = "12345";
     private String name = "Seun";
-    private final int accountNumber = 1;
+    private int accountNumber;
     private final int amount = 5000;
 
     @BeforeEach
     public void setUp(){
-        bank = new Bank();
-        bank.createAccount(name,correctPassword);
+        bank = new Bank("058");
+        accountNumber = bank.createAccount(name,correctPassword);
     }
 
     @Test
