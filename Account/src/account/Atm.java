@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Atm {
     static void main() {
-        Bank bank = new Bank("011");
+        Bank bank = new Bank(BankCode.GUARANTY_TRUST_BANK);
         bank.createAccount("Bola", "5555");
         bank.createAccount("Tola", "2222");
         bank.createAccount("Donald", "3333");

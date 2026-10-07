@@ -5,14 +5,18 @@ import java.util.List;
 
 public class Bank {
     private List<Account> accounts = new ArrayList<>();
-    private String bankCode;
+    private BankCode bankName;
     private Nuban nuban =  new Nuban();
 
-    public Bank(String bankCode) {
-        this.bankCode = bankCode;
+    public Bank(BankCode bankName) {
+        this.bankName = bankName;
     }
 
-    private String generateAccountNumber() {return nuban.create(bankCode);}
+    private String generateAccountNumber() {return nuban.create(bankName.getBankCode());}
+
+    public String getBankName(){return bankName.toString();}
+
+    public BankCode getBankCode(){return bankName;}
 
     public String  createAccount(String name, String password) {
         Account newAccount = new Account(name, password);

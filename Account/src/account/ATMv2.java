@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.util.InputMismatchException;
 
 public class ATMv2 {
-    private static Bank gtbBank = new Bank("058");
+    private static Bank gtbBank = new Bank(BankCode.GUARANTY_TRUST_BANK);
 
     public static void main(String[] args) {
         goToMainMenu();

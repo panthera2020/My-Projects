@@ -16,8 +16,8 @@ public class BankTest {
 
     @BeforeEach
     public void setUp(){
-        bank = new Bank("058");
-         accountNumber = bank.createAccount(name,correctPassword);
+        bank = new Bank(BankCode.GUARANTY_TRUST_BANK);
+        accountNumber = bank.createAccount(name,correctPassword);
     }
 
     @Test
@@ -159,5 +159,10 @@ public class BankTest {
     @Test
     public void testThatWhenIHaveAccountNumberICanReturnNameOfCustomer(){
         assertEquals("Seun",bank.checkAccountName(accountNumber));
+    }
+
+    @Test
+    public void testThatWhenBankIsCreatedICanGetBankName(){
+        assertEquals("GUARANTY_TRUST_BANK",bank.getBankName());
     }
 }
