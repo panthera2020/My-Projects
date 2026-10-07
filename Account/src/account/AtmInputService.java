@@ -7,9 +7,9 @@ public class AtmInputService {
 
     public AtmInputService(Scanner input) { this.input = input; }
 
-    public int getAccountNumber() {
+    public String getAccountNumber() {
         IO.println("Enter account number: ");
-        return input.nextInt();
+        return input.nextLine();
     }
 
     public int getAmount() {

@@ -1,16 +1,19 @@
 package account;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Nuban {
     private static final int[] WEIGHTS = {3, 7, 3, 3, 7, 3, 3, 7, 3, 3, 7, 3};
 
     public boolean isValid(String accountNumber) {
+        validateLengthOf(accountNumber);
         int lastDigit = Character.getNumericValue(accountNumber.charAt(accountNumber.length() - 1));
         int sum = toValidateGetSumOfDigitsOf(accountNumber);
         return isEquals(sum, lastDigit) && isFirstThreeDigitValidIn(accountNumber);
     }
 
     public String create(String bankCode) {
-        int digits = (int) (Math.random() * 1000000000);
+        int digits = ThreadLocalRandom.current().nextInt(100000000, 1000000000);
         String bankCodeAndDigit = bankCode + digits;
         return bankCodeAndDigit + getLastDigit(bankCodeAndDigit);
     }
@@ -29,10 +32,14 @@ public class Nuban {
         return checkDigit == lastDigit;
     }
 
-
+    private void validateLengthOf(String accountNumber) {
+        if(accountNumber.length() != 13){throw new IllegalArgumentException("Invalid account number");}
+    }
 
     private int getLastDigit(String accountNumber) {
-        return 10 - (toCreateGetSumOfDigitsOf(accountNumber) % 10);
+        int checkDigit = 10 - (toCreateGetSumOfDigitsOf(accountNumber) % 10);
+        if(checkDigit == 10) checkDigit = 0;
+        return checkDigit;
     }
 
     private int toCreateGetSumOfDigitsOf(String accountNumber) {

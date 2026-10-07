@@ -82,9 +82,9 @@ public class AccountTest {
 
     @Test
     public void testThatWhenAccountIsCreatedAndAccountNumberIsSetICanGetAccountNumber(){
-        int accountNumber = 1;
+        String accountNumber = "1";
         account.set(accountNumber);
-        assertEquals(1,account.getAccountNumber());
+        assertEquals(accountNumber,account.getAccountNumber());
     }
 
     @Test

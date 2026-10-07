@@ -4,13 +4,13 @@ public class Account {
     private int balance;
     private String password;
     private String accountName;
-    private int accountNumber;
+    private String accountNumber;
 
-    public int getAccountNumber() { return accountNumber; }
+    public String getAccountNumber() { return accountNumber; }
 
     public String getAccountName() { return accountName; }
 
-    public void set(int accountNumber) { this.accountNumber = accountNumber;}
+    public void set(String accountNumber) { this.accountNumber = accountNumber;}
 
     public Account(String accountName,String password) {
         this.balance = 0;

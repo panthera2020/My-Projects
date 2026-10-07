@@ -18,7 +18,7 @@ public class AtmService {
         String depositChoice = "";
         while (!depositChoice.equalsIgnoreCase("Yes")) {
             try {
-                int accountNumber = inputService.getAccountNumber();
+                String accountNumber = inputService.getAccountNumber();
                 int amount = inputService.getAmount();
                 inputService.clearBuffer();
                 String name = bank.checkAccountName(accountNumber);
@@ -42,7 +42,7 @@ public class AtmService {
         boolean withdrawn = false;
         while (!withdrawn) {
             try {
-                int accountNumber = inputService.getAccountNumber();
+                String accountNumber = inputService.getAccountNumber();
                 int amount = inputService.getAmount();
                 inputService.clearBuffer();
                 String password = inputService.getPassword();
@@ -62,9 +62,9 @@ public class AtmService {
         String transferChoice = "";
         while (!transferChoice.equalsIgnoreCase("Yes")) {
             try {
-                int senderAccountNumber = inputService.getAccountNumber();
+                String senderAccountNumber = inputService.getAccountNumber();
                 IO.println("For recipient's: ");
-                int recipientAccountNumber = inputService.getAccountNumber();
+                String recipientAccountNumber = inputService.getAccountNumber();
                 int amount = inputService.getAmount();
                 inputService.clearBuffer();
                 String recipientName = bank.checkAccountName(recipientAccountNumber);
@@ -89,7 +89,7 @@ public class AtmService {
         boolean checked = false;
         while (!checked) {
             try {
-                int accountNumber = inputService.getAccountNumber();
+                String accountNumber = inputService.getAccountNumber();
                 inputService.clearBuffer();
                 String password = inputService.getPassword();
                 String name = bank.checkAccountName(accountNumber);

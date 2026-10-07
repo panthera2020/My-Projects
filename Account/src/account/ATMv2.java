@@ -1,6 +1,7 @@
 package account;
 
 import javax.swing.*;
+import java.util.InputMismatchException;
 
 public class ATMv2 {
     private static Bank gtbBank = new Bank("058");
@@ -43,15 +44,15 @@ public class ATMv2 {
     private static void transfer() {
         try {
             IO.println("Sender Account");
-            int senderAccountNumber = requestAccountNumber();
+            String senderAccountNumber = requestAccountNumber();
             IO.println("Receiver Account");
-            int receiverAccountNumber = requestAccountNumber();
+            String receiverAccountNumber = requestAccountNumber();
             int amount = requestAmount();
             String senderPin = requestPin();
             gtbBank.transfer(amount,senderAccountNumber,receiverAccountNumber,senderPin);
             print("Transfer complete!");
         }
-        catch (IllegalArgumentException e) {
+        catch (IllegalArgumentException | InputMismatchException e) {
             print(e.getMessage());
         }
         finally {
@@ -61,12 +62,12 @@ public class ATMv2 {
 
     private static void checkBalance() {
         try {
-            int userAccountNumber = requestAccountNumber();
+            String userAccountNumber = requestAccountNumber();
             String userPin = requestPin();
             int balance = gtbBank.checkBalance(userAccountNumber, userPin);
             print("Your account balance is " + balance);
         }
-        catch (IllegalArgumentException e) {
+        catch (IllegalArgumentException | InputMismatchException e) {
             print(e.getMessage());
         }
         finally {
@@ -76,14 +77,14 @@ public class ATMv2 {
 
     private static void withdraw() {
         try {
-            int userAccountNumber = requestAccountNumber();
+            String userAccountNumber = requestAccountNumber();
             String userPin = requestPin();
             int amount = requestAmount();
             gtbBank.withdraw(amount, userAccountNumber, userPin);
             print(amount + " withdrawn successfully!");
             print("New balance: " + gtbBank.checkBalance(userAccountNumber, userPin));
         }
-        catch (IllegalArgumentException e) {
+        catch (IllegalArgumentException | InputMismatchException e) {
             print(e.getMessage());
         }
         finally {
@@ -93,11 +94,11 @@ public class ATMv2 {
 
     private static void deposit() {
         try {
-            int userAccountNumber = requestAccountNumber();
+            String userAccountNumber = requestAccountNumber();
             int amount = requestAmount();
             gtbBank.deposit(amount,userAccountNumber);
         }
-        catch (IllegalArgumentException e) {
+        catch (IllegalArgumentException | InputMismatchException e) {
             print(e.getMessage());
         }
         finally {
@@ -109,9 +110,11 @@ public class ATMv2 {
         try {
             String userName = input("Enter your name: ");
             String userPin = requestPin();
-            gtbBank.createAccount(userName, userPin);
+            String userAccountNumber = gtbBank.createAccount(userName, userPin);
+            print("Account created successfully!");
+            print("Account number: " + userAccountNumber);
         }
-        catch (IllegalArgumentException e) {
+        catch (IllegalArgumentException | InputMismatchException e) {
             print(e.getMessage());
         }
         finally {
@@ -121,11 +124,11 @@ public class ATMv2 {
 
     private static String input(String prompt) { return JOptionPane.showInputDialog(prompt);}
 
-    private static int requestAccountNumber() { return Integer.parseInt(input("Enter Account Number: "));}
+    private static String requestAccountNumber() { return input("Enter Account Number: ");}
 
     private static String requestPin() { return input("Enter PIN: ");}
 
     private static int requestAmount() { return Integer.parseInt(input("Enter Amount "));}
 
-    public static void print(String message){IO.print(message);}
+    public static void print(String message){JOptionPane.showMessageDialog(null,message);}
 }
