@@ -2,11 +2,14 @@ package account;
 
 import javax.swing.*;
 import java.util.InputMismatchException;
+import java.util.List;
 
 public class ATMv2 {
     private static Bank gtbBank = new Bank(BankCode.GUARANTY_TRUST_BANK);
+    private static Banks cbn = new Banks();
 
     public static void main(String[] args) {
+        addBanks();
         goToMainMenu();
     }
 
@@ -108,8 +111,12 @@ public class ATMv2 {
 
     private static void createAccount() {
         try {
+            int bankSelection = selectBank();
             String userName = input("Enter your name: ");
             String userPin = requestPin();
+            switch (bankSelection) {
+                case 1 ->
+            }
             String userAccountNumber = gtbBank.createAccount(userName, userPin);
             print("Account created successfully!");
             print("Account number: " + userAccountNumber);
@@ -119,6 +126,23 @@ public class ATMv2 {
         }
         finally {
             goToMainMenu();
+        }
+    }
+
+    private static int selectBank() {
+        List<Bank> registeredBanks = cbn.getNumberOfRegisteredBanks();
+        int counter = 1;
+        for(Bank eachBank :  registeredBanks) {
+            print("FOR " + eachBank.getBankName() + " PRESS " + counter);
+            counter++;
+        }
+        return Integer.parseInt(input("Please enter a number between 1 and " + registeredBanks.size()));
+    }
+
+    private static void addBanks() {
+        for(BankCode registeredBank : BankCode.values()) {
+            Bank bank = new Bank(registeredBank);
+            cbn.add(bank);
         }
     }
 
