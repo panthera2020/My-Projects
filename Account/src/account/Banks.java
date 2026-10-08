@@ -8,7 +8,7 @@ public class Banks {
 
     public void add(Bank bank) { cbn.add(bank);}
 
-    public List<Bank> getNumberOfRegisteredBanks() { return cbn;}
+    public List<Bank> getRegisteredBanks() { return cbn;}
 
     public Bank findBankOf(String accountNumber) {
         validate(accountNumber);

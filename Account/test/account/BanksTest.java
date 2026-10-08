@@ -25,7 +25,7 @@ public class BanksTest {
     public void testThatWhenBanksCanOneBank(){
         Bank gtbBank = new Bank(BankCode.GUARANTY_TRUST_BANK);
         cbn.add(gtbBank);
-        assertEquals(1,cbn.getNumberOfRegisteredBanks().size());
+        assertEquals(1,cbn.getRegisteredBanks().size());
     }
 
     @Test
@@ -33,7 +33,7 @@ public class BanksTest {
         cbn.add(firstBank);
         cbn.add(accessBank);
         cbn.add(fidelityBank);
-        assertEquals(3,cbn.getNumberOfRegisteredBanks().size());
+        assertEquals(3,cbn.getRegisteredBanks().size());
     }
 
     @Test

@@ -1,11 +1,10 @@
 package account;
 
-import javax.swing.*;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Scanner;
 
 public class ATMv2 {
-    private static Bank gtbBank = new Bank(BankCode.GUARANTY_TRUST_BANK);
     private static Banks cbn = new Banks();
 
     public static void main(String[] args) {
@@ -52,7 +51,7 @@ public class ATMv2 {
             String receiverAccountNumber = requestAccountNumber();
             int amount = requestAmount();
             String senderPin = requestPin();
-            gtbBank.transfer(amount,senderAccountNumber,receiverAccountNumber,senderPin);
+            cbn.transfer(amount,senderAccountNumber,receiverAccountNumber,senderPin);
             print("Transfer complete!");
         }
         catch (IllegalArgumentException | InputMismatchException e) {
@@ -67,7 +66,8 @@ public class ATMv2 {
         try {
             String userAccountNumber = requestAccountNumber();
             String userPin = requestPin();
-            int balance = gtbBank.checkBalance(userAccountNumber, userPin);
+            Bank userBank = cbn.findBankOf(userAccountNumber);
+            int balance = userBank.checkBalance(userAccountNumber, userPin);
             print("Your account balance is " + balance);
         }
         catch (IllegalArgumentException | InputMismatchException e) {
@@ -83,9 +83,10 @@ public class ATMv2 {
             String userAccountNumber = requestAccountNumber();
             String userPin = requestPin();
             int amount = requestAmount();
-            gtbBank.withdraw(amount, userAccountNumber, userPin);
+            Bank userBank = cbn.findBankOf(userAccountNumber);
+            userBank.withdraw(amount, userAccountNumber, userPin);
             print(amount + " withdrawn successfully!");
-            print("New balance: " + gtbBank.checkBalance(userAccountNumber, userPin));
+            print("New balance: " + userBank.checkBalance(userAccountNumber, userPin));
         }
         catch (IllegalArgumentException | InputMismatchException e) {
             print(e.getMessage());
@@ -99,7 +100,8 @@ public class ATMv2 {
         try {
             String userAccountNumber = requestAccountNumber();
             int amount = requestAmount();
-            gtbBank.deposit(amount,userAccountNumber);
+            Bank userBank = cbn.findBankOf(userAccountNumber);
+            userBank.deposit(amount,userAccountNumber);
         }
         catch (IllegalArgumentException | InputMismatchException e) {
             print(e.getMessage());
@@ -111,15 +113,10 @@ public class ATMv2 {
 
     private static void createAccount() {
         try {
-            int bankSelection = selectBank();
+            int selectedBank = selectBank();
             String userName = input("Enter your name: ");
             String userPin = requestPin();
-            switch (bankSelection) {
-                case 1 ->
-            }
-            String userAccountNumber = gtbBank.createAccount(userName, userPin);
-            print("Account created successfully!");
-            print("Account number: " + userAccountNumber);
+            registerAccount(selectedBank, userName, userPin);
         }
         catch (IllegalArgumentException | InputMismatchException e) {
             print(e.getMessage());
@@ -129,14 +126,28 @@ public class ATMv2 {
         }
     }
 
+    private static void registerAccount(int bankSelected, String userName, String userPin) {
+        List<Bank> registeredBank = cbn.getRegisteredBanks();
+        String userAccountNumber = "";
+        userAccountNumber = registeredBank.get(bankSelected - 1).createAccount(userName, userPin);
+        print("Account created successfully!");
+        print("Account number: " + userAccountNumber);
+    }
+
     private static int selectBank() {
-        List<Bank> registeredBanks = cbn.getNumberOfRegisteredBanks();
+        List<Bank> registeredBanks = cbn.getRegisteredBanks();
         int counter = 1;
         for(Bank eachBank :  registeredBanks) {
             print("FOR " + eachBank.getBankName() + " PRESS " + counter);
             counter++;
         }
-        return Integer.parseInt(input("Please enter a number between 1 and " + registeredBanks.size()));
+        int selectedBank = Integer.parseInt(input("Please enter a number between 1 and " + registeredBanks.size()));
+        validate(selectedBank, registeredBanks);
+        return selectedBank;
+    }
+
+    private static void validate(int selectedBank, List<Bank> registeredBanks) {
+        if(selectedBank < 1 || selectedBank > registeredBanks.size()) throw new InputMismatchException("Please enter a number between 1 and " + registeredBanks.size());
     }
 
     private static void addBanks() {
@@ -146,7 +157,11 @@ public class ATMv2 {
         }
     }
 
-    private static String input(String prompt) { return JOptionPane.showInputDialog(prompt);}
+    private static String input(String prompt) {
+        IO.println(prompt);
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
+    }
 
     private static String requestAccountNumber() { return input("Enter Account Number: ");}
 
@@ -154,5 +169,5 @@ public class ATMv2 {
 
     private static int requestAmount() { return Integer.parseInt(input("Enter Amount "));}
 
-    public static void print(String message){JOptionPane.showMessageDialog(null,message);}
+    public static void print(String message){ IO.println(message);}
 }
