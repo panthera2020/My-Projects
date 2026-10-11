@@ -19,8 +19,9 @@ public class MySet {
     public boolean contains(Object element) {
         boolean inSet = false;
         for(Object objectIn : set){
-            if(objectIn.equals(element)){
+            if (objectIn.equals(element)) {
                 inSet = true;
+                break;
             }
         }
         return inSet;
