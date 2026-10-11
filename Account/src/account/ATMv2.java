@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ATMv2 {
-    private static Banks cbn = new Banks();
+    private static Banks cbn = Banks.getNibs();
 
     public static void main(String[] args) {
         addBanks();
@@ -51,7 +51,7 @@ public class ATMv2 {
             String receiverAccountNumber = requestAccountNumber();
             int amount = requestAmount();
             String senderPin = requestPin();
-            cbn.transfer(amount,senderAccountNumber,receiverAccountNumber,senderPin);
+//            cbn.transfer(amount,senderAccountNumber,receiverAccountNumber,senderPin);
             print("Transfer complete!");
         }
         catch (IllegalArgumentException | InputMismatchException e) {
@@ -153,7 +153,7 @@ public class ATMv2 {
     private static void addBanks() {
         for(BankCode registeredBank : BankCode.values()) {
             Bank bank = new Bank(registeredBank);
-            cbn.add(bank);
+//            cbn.add(bank);
         }
     }
 

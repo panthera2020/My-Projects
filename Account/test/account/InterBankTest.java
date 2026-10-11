@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class InterBankTest {
-
     private final Banks banks = Banks.getNibs();
     private final String seunPassword = "1234";
     private final String bolaPassword = "4321";
@@ -72,5 +71,16 @@ public class InterBankTest {
     public void testThatTransferFromAccountThatBelongsToAnotherBank_Throws() {
         assertThrows(IllegalArgumentException.class, ()-> gtbBank.transfer(2500, seunNumber, bolaNumber, seunPassword));
         assertEquals(10000, firstBank.checkBalance(seunNumber, seunPassword));
+    }
+
+    @Test
+    public void testThatTransferIntoLoneBankAccount_ThrowsAndSenderIsUnchanged() {
+        Bank lone = new Bank(BankCode.GUARANTY_TRUST_BANK);
+        String loneNumber = lone.createAccount("Bola", "4321");
+        Bank first = Banks.getNibs().findBank(BankCode.FIRST_BANK);
+        String seun = first.createAccount("Seun", "1234");
+        first.deposit(10000, seun);
+        assertThrows(IllegalArgumentException.class, ()-> first.transfer(2500, seun, loneNumber, "1234"));
+        assertEquals(10000, first.checkBalance(seun, "1234"));
     }
 }
