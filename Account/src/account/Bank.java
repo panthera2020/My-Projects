@@ -47,13 +47,29 @@ public class Bank {
         findAccount(accountNumber).withdraw(amount, correctPassword);
     }
 
+    private boolean bankOwns(String accountNumber) { return findAccount(accountNumber) != null; }
+
     public void transfer(int amount, String senderAccountNumber, String receiverAccountNumber, String senderPassword) {
         validate(senderAccountNumber, receiverAccountNumber);
         validate(senderAccountNumber);
-        validate(receiverAccountNumber);
-        withdraw(amount,senderAccountNumber,senderPassword);
-        deposit(amount,receiverAccountNumber);
+        if(bankOwns(receiverAccountNumber)) internalTransfer(amount, senderAccountNumber, receiverAccountNumber, senderPassword);
+        else externalTransfer(amount, senderAccountNumber, receiverAccountNumber, senderPassword);
+
     }
+
+    private void externalTransfer(int amount, String senderAccountNumber, String receiverAccountNumber, String senderPassword) {
+        Bank receiverBank = Banks.getNibs().findBankOf(receiverAccountNumber);
+        receiverBank.validate(receiverAccountNumber);
+        withdraw(amount, senderAccountNumber, senderPassword);
+        receiverBank.deposit(amount, receiverAccountNumber);
+    }
+
+    private void internalTransfer(int amount, String senderAccountNumber, String receiverAccountNumber, String senderPassword) {
+        validate(receiverAccountNumber);
+        withdraw(amount, senderAccountNumber, senderPassword);
+        deposit(amount, receiverAccountNumber);
+    }
+
 
     private void validate(String senderAccountNumber, String receiverAccountNumber) {
         if(senderAccountNumber.equals(receiverAccountNumber) ) throw new IllegalArgumentException("Same account number");

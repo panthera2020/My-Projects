@@ -1,73 +1,73 @@
 package account;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BanksTest {
-    private String password = "1234";
-    private Banks cbn;
-    private Bank firstBank ;
-    private Bank accessBank;
-    private Bank fidelityBank;
+    private final Banks cbn = Banks.getNibs();
+    private final Nuban nuban = new Nuban();
 
-    @BeforeEach
-    public void setUp() {
-        cbn = new Banks();
-        firstBank = new Bank(BankCode.FIRST_BANK);
-        accessBank = new Bank(BankCode.ACCESS_BANK);
-        fidelityBank = new Bank(BankCode.FIDELITY_BANK);
+    @Test
+    public void testThatBanksIsASingleton(){
+        assertSame(Banks.getNibs(), Banks.getNibs());
     }
 
     @Test
-    public void testThatWhenBanksCanOneBank(){
-        Bank gtbBank = new Bank(BankCode.GUARANTY_TRUST_BANK);
-        cbn.add(gtbBank);
-        assertEquals(1,cbn.getRegisteredBanks().size());
+    public void testThatWhenBanksIsCreatedAllBanksAreCreated(){
+        assertEquals(BankCode.values().length, cbn.getRegisteredBanks().size());
     }
 
     @Test
-    public void testThatWhenBanksCanMultipleBanks(){
-        cbn.add(firstBank);
-        cbn.add(accessBank);
-        cbn.add(fidelityBank);
-        assertEquals(3,cbn.getRegisteredBanks().size());
+    public void testThatEveryBankCodeHasExactlyOneBank(){
+        for (BankCode bankCode : BankCode.values()) {
+            int count = 0;
+            for (Bank bank : cbn.getRegisteredBanks()) {
+                if (bank.getBankCode() == bankCode) count++;
+            }
+            assertEquals(1, count);
+        }
     }
 
     @Test
-    public void testThatWhenBanksFindBank(){
-        cbn.add(firstBank);
-        String firstBankAccountNumber = firstBank.createAccount("Seun", password);
-        Bank foundBank = cbn.findBankOf(firstBankAccountNumber);
-        assertEquals(foundBank, firstBank);
+    public void testThatBanksFindsTheRightBankForEveryBankCode(){
+        for (BankCode bankCode : BankCode.values()) {
+            String accountNumber = nuban.create(bankCode.getBankCode());
+            assertEquals(bankCode, cbn.findBankOf(accountNumber).getBankCode());
+        }
     }
 
     @Test
-    public void testThatWhenBanksFindAccountWithInvalidAccountNumber_ErrorIsThrown(){
-        cbn.add(firstBank);
-        firstBank.createAccount("Seun", password);
-        assertThrows(IllegalArgumentException.class,()-> cbn.findBankOf("213456567432"));
+    public void testThatBanksFindsTheBankOfAnAccountThatWasCreated(){
+        Bank firstBank = cbn.findBankOf(nuban.create(BankCode.FIRST_BANK.getBankCode()));
+        String accountNumber = firstBank.createAccount("Seun", "1234");
+        assertSame(firstBank, cbn.findBankOf(accountNumber));
     }
 
     @Test
-    public void testThatWhenBankFindsAccountAndAccountNumberHasNotBeenCreated_ErrorIsThrown(){
-        cbn.add(firstBank);
-        assertThrows(IllegalArgumentException.class,()-> cbn.findBankOf("1234"));
+    public void testThatFindingABankLooksOnlyAtTheFirstThreeDigits(){
+        assertEquals(BankCode.GUARANTY_TRUST_BANK, cbn.findBankOf("0580000000000").getBankCode());
     }
 
     @Test
-    public void testThatBankCanTransferFromOne5kFromOneBankToAnotherBank(){
-        cbn.add(firstBank);
-        String firstBankAccountNumber = firstBank.createAccount("Seun", password);
-        firstBank.deposit(10000, firstBankAccountNumber);
-        cbn.add(fidelityBank);
-        String fidelityBankAccountNumber = fidelityBank.createAccount("Honour", "4321");
-        cbn.transfer(5000, firstBankAccountNumber, fidelityBankAccountNumber, password);
-        assertEquals(5000, firstBank.checkBalance(firstBankAccountNumber, password));
-        assertEquals(5000, fidelityBank.checkBalance(fidelityBankAccountNumber, "4321"));
+    public void testThatFindingBankWithUnknownBankCode_ErrorIsThrown(){
+        assertThrows(IllegalArgumentException.class, () -> cbn.findBankOf("9990000000000"));
     }
 
+    @Test
+    public void testThatFindingBankWithTooShortAccountNumber_ErrorIsThrown(){
+        assertThrows(IllegalArgumentException.class, () -> cbn.findBankOf("1234"));
+    }
 
+    @Test
+    public void testThatFindingBankWithTooLongAccountNumber_ErrorIsThrown(){
+        assertThrows(IllegalArgumentException.class, () -> cbn.findBankOf("01100000145790"));
+    }
+
+    @Test
+    public void testThatFindingBankWithEmptyAccountNumber_ErrorIsThrown(){
+        assertThrows(IllegalArgumentException.class, () -> cbn.findBankOf(""));
+    }
 }

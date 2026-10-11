@@ -13,6 +13,7 @@ public class BankTest {
     private String name = "Seun";
     private String accountNumber;
     private final int amount = 5000;
+    private final Nuban nuban = new Nuban();
 
     @BeforeEach
     public void setUp(){
@@ -136,8 +137,6 @@ public class BankTest {
         String receiverAccountNumber = bank.createAccount(receiverName, receiverPassword);
         assertThrows(IllegalArgumentException.class, () -> bank.transfer(amount, accountNumber, receiverAccountNumber, correctPassword));
     }
-
-
 
     @Test
     public void testThatTransferWithNegativeAmount_ThrowsError() {
